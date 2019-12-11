@@ -1,0 +1,16 @@
+.action-column {
+	width: 68.5px;
+}
+
+.form-group.required label:after {
+	content: " *";
+	color: #de350b;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+span.required {
+	color: #de350b;
+	font-size: 12px;
+	font-weight: bold;
+}

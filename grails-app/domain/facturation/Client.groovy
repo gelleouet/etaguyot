@@ -1,0 +1,45 @@
+package facturation
+
+import grails.validation.Validateable
+
+class Client implements Validateable {
+
+	String code
+	String raisonSociale
+
+	String email
+	String adresse
+	String codePostal
+	String ville
+	String siret
+	String numTVA
+	String famille
+	ModeReglement modeReglement
+	ModeEnvoi modeEnvoi
+	Integer echeance
+
+
+	static constraints = {
+		code unique: true
+		email nullable: true
+		adresse nullable: true
+		codePostal nullable: true
+		ville nullable: true
+		siret nullable: true
+		numTVA nullable: true
+		modeReglement nullable: true
+		modeEnvoi nullable: true
+		echeance nullable: true
+		famille nullable: true
+	}
+
+
+	static mapping = {
+		code length:16
+		codePostal length:16
+		ville length:64
+		siret length:32
+		numTVA length:32
+		sort 'raisonSociale'
+	}
+}

@@ -1,3 +1,8 @@
+package spring
+
+import facturation.UserPasswordEncoderListener
+
 // Place your Spring DSL code here
 beans = {
+	userPasswordEncoderListener(UserPasswordEncoderListener)
 }
