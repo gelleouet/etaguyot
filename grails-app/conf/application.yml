@@ -138,12 +138,6 @@ environments:
                   username: guest
                   password: guest
 
-email:
-    smtp:
-        host: email-smtp.eu-west-1.amazonaws.com
-        port: 587
-        password: Au3YKftssfjPYrNT0XXcPHsKZX2IAHV5dWHi1gG6UC7I
-        username: AKIAJIJNQQDO7N36M55A
 
 
 
