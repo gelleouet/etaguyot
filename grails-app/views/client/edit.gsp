@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="main" />
+        <meta name="layout" content="page-default" />
     </head>
     
     
@@ -15,20 +15,34 @@
 	   			${ client?.id ? client.raisonSociale : 'Nouveau client' }
 	   		</g:link>
     	</div>
-   		
    	</content>
     
     
     <content tag="subheaderToolbar">
-   		<g:link class="btn btn-default btn-sm btn-bold btn-upper">
-   			<i class="fa fa-copy"></i>Dupliquer
-   		</g:link>
+    	<g:if test="${ client?.id }">
+	   		<a href="#" class="btn btn-default btn-sm btn-bold btn-upper">
+	   			<i class="fa fa-copy"></i>Dupliquer
+	   		</a>
+	   		<g:link action="delete" id="${ client.id }" class="btn btn-outline-danger btn-sm btn-bold btn-upper confirm-button">
+	   			<i class="la la-trash"></i>Supprimer
+	   		</g:link>
+   		</g:if>
    	</content>
     
     <body>
     	<g:form action="save" name="client-edit-form" class="kt-form">
-	    	<g:applyLayout name="portlet" params="[footerSolid: true]">
+    	
+    		<g:hiddenField name="id" value="${ client?.id }"/>
+    	
+	    	<g:applyLayout name="portlet" params="['footerSolid': true]">
 	    		<content tag="portletTitle">${ client?.id ? client.raisonSociale : 'Nouveau client' }</content>
+	    		
+	    		<content tag="portletToolbar">
+	    			<g:link class="btn btn-secondary kt-margin-r-10">
+	    				<i class="la la-arrow-left"></i> Retour
+	    			</g:link>
+	    			<button class="btn btn-brand"><i class="la la-check"></i> Enregistrer</button>
+	    		</content>
 	    		
 	    		<content tag="portletBody">
 	   				<div class="row">
@@ -59,20 +73,11 @@
 	    		
 	    		
 	    		<content tag="portletFooter">
-	    			<div class="kt-form__actions">
-	    				<div class="row">
-		    				<div class="col-xl-2"></div>
-		   					<div class="col-xl-8">
-		   						<div class="row">
-		   							<div class="col-3"></div>
-		   							<div class="col-9">
-		   								<button class="btn btn-brand">Enregistrer</button>
-		   								<g:link action="index" class="btn btn-secondary">Annuler</g:link>
-		   							</div>
-		   						</div>
-		   					</div>
-		   					<div class="col-xl-2"></div>
-	   					</div>
+	    			<div class="kt-form__actions kt-form__actions--right">
+ 						<g:link class="btn btn-secondary kt-margin-r-10">
+		    				<i class="la la-arrow-left"></i> Retour
+		    			</g:link>
+		    			<button class="btn btn-brand"><i class="la la-check"></i> Enregistrer</button>
 	    			</div>
 	    		</content>
 	    	</g:applyLayout>

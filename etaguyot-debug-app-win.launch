@@ -6,6 +6,9 @@
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
 </listAttribute>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="SPRING_CONFIG_ADDITIONAL_LOCATION" value="C:/Users/Gregory/Documents/system/jdevops-server/etaguyot-tomcat9/conf/application.yml"/>
+</mapAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <listAttribute key="org.eclipse.jdt.launching.CLASSPATH">

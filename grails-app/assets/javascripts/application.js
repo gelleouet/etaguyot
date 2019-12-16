@@ -15,7 +15,8 @@
 var KTAppOptions = {
 	"colors": {
 		"state": {
-			"brand": "#1cac81",
+			//"brand": "#1cac81",
+			"brand": "#008a2e",
 			"metal": "#c4c5d6",
 			"light": "#ffffff",
 			"accent": "#00c5dc",

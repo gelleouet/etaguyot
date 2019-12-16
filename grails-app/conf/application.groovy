@@ -1,12 +1,10 @@
 // Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.password.algorithm = 'bcrypt'
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'facturation.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'facturation.UserRole'
 grails.plugin.springsecurity.authority.className = 'facturation.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
-	[pattern: '/index',          access: ['permitAll']],
-	[pattern: '/index.gsp',      access: ['permitAll']],
 	[pattern: '/shutdown',       access: ['permitAll']],
 	[pattern: '/assets/**',      access: ['permitAll']],
 	[pattern: '/**/js/**',       access: ['permitAll']],

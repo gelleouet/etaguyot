@@ -39,3 +39,17 @@
 		<g:textField name="famille" value="${ client?.famille }" class="form-control" placeholder="Famille" maxlength="255"/>
 	</div>
 </div>
+
+<div class="form-group row">
+	<label class="col-3 col-form-label">Email</label>
+	<div class="col-6">
+		<g:field type="email" name="email" value="${ client?.email }" class="form-control" placeholder="Email" maxlength="64"/>
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-3 col-form-label">Téléphone</label>
+	<div class="col-6">
+		<g:field type="tel" name="telephone" value="${ client?.telephone }" class="form-control" placeholder="Téléphone" maxlength="16"/>
+	</div>
+</div>

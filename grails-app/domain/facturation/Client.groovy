@@ -14,6 +14,7 @@ class Client implements Validateable {
 	String siret
 	String numTVA
 	String famille
+	String telephone
 	ModeReglement modeReglement
 	ModeEnvoi modeEnvoi
 	Integer echeance
@@ -22,6 +23,7 @@ class Client implements Validateable {
 	static constraints = {
 		code unique: true
 		email nullable: true
+		telephone nullable: true
 		adresse nullable: true
 		codePostal nullable: true
 		ville nullable: true
@@ -40,6 +42,8 @@ class Client implements Validateable {
 		ville length:64
 		siret length:32
 		numTVA length:32
+		telephone length:16
+		email length:64
 		sort 'raisonSociale'
 	}
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="main" />
+        <meta name="layout" content="page-default" />
     </head>
     
     <content tag="subheaderTitle">
@@ -42,14 +42,11 @@
 	    						<td>${ client.raisonSociale }</td>
 	    						<td>${ client.code }</td>
 	    						<td>${ client.email }</td>
-	    						<td></td>
+	    						<td>${ client.telephone }</td>
 	    						<td>${ client.codePostal } ${ client.ville }</td>
 	    						<td>
 	    							<g:link action="edit" id="${ client.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Modifier">
 			                          <i class="la la-edit"></i>
-			                        </g:link>
-	    							<g:link action="delete" id="${ client.id }" class="confirm-button btn btn-sm btn-clean btn-icon btn-icon-md" title="Supprimer" data-confirm="supprimer le client">
-			                          <i class="la la-trash"></i>
 			                        </g:link>
 	    						</td>
 	    					</tr>
