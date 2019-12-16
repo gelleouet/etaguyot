@@ -24,7 +24,7 @@
 	            	</g:link>
 				</li>
 	            <li class="kt-menu__item ">
-	            	<g:link controller="devis" class="kt-menu__link">
+	            	<g:link controller="devis" class="kt-menu__link disabled">
 	            		<span class="kt-menu__link-text"><i class="fa fa-file-invoice fa-lg"></i>&nbsp;&nbsp;Devis</span>
 	            	</g:link>
 				</li>
@@ -49,7 +49,7 @@
 		<div class="kt-header__topbar-item kt-header__topbar-item--user">
 			<div class="kt-header__topbar-wrapper">
 				<div class="kt-header__topbar-username">
-					<g:form class="form-inline" action="search" controller="dashboard" metthod="post">
+					<g:form class="form-inline" action="globalSearch" controller="dashboard" metthod="post">
 						<div class="kt-input-icon kt-input-icon--left">
 							<g:textField class="form-control" name="value" placeholder="Rechercher..." required="true"/>
 							<span class="kt-input-icon__icon kt-input-icon__icon--left">

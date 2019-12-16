@@ -9,21 +9,32 @@ class ClientController extends AppController {
 
 	def index(ClientCommand command) {
 		def clients = clientService.search(command, pagination())
-
-		if (clients.size() == 1) {
-			redirect action: "edit", id: clients[0].id
-		} else {
-			[command: command, clients: clients]
-		}
+		render view: 'index', model: [command: command, clients: clients]
 	}
 
+	def globalSearch(String value) {
+		def command
+		if (value.isInteger()) {
+			command = new ClientCommand(code: value)
+		} else {
+			command = new ClientCommand(raisonSociale: value)
+		}
+
+		def clients = clientService.search(command, [max: 1])
+
+		if (clients.totalCount == 1) {
+			edit(clients[0])
+		} else {
+			index(command)
+		}
+	}
 
 	def edit(Client client) {
 		client = getRequestCommand(client ?: new Client())
 		if (!client.code) {
 			client.code = clientService.newCodeClient()
 		}
-		[client: client, modeEnvois: ModeEnvoi.list(), modeReglements: ModeReglement.list()]
+		render view: 'edit', model: [client: client, modeEnvois: ModeEnvoi.list(), modeReglements: ModeReglement.list()]
 	}
 
 	@ExceptionHandler

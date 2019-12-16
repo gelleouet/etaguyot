@@ -6,7 +6,6 @@ class Client implements Validateable {
 
 	String code
 	String raisonSociale
-
 	String email
 	String adresse
 	String codePostal

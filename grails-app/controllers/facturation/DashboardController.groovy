@@ -17,11 +17,11 @@ class DashboardController extends AppController {
 
 
 	@ExceptionHandler(action = "index")
-	def search(String value) {
+	def globalSearch(String value) {
 		def controllerSearch = controllerPrefix[(value[0])]
 
 		if (controllerSearch) {
-			redirect controller: controllerSearch, params: [code: value.substring(1)]
+			redirect controller: controllerSearch, action: "globalSearch", params: [value: value.substring(1)]
 		} else {
 			throw new AppException("Aucun résultat ne correspond à votre recherche !")
 		}
