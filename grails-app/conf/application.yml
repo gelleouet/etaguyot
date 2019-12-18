@@ -97,4 +97,41 @@ hibernate:
         queries: false
         use_second_level_cache: false
         use_query_cache: false
+
+---
+app:
+    pagination:
+        max: 25
         
+        
+---
+# en doublon de application.groovy mais celui-ci n'est pas chargé
+# depuis le lancement de init/Application.groovy (spring boot)
+#grails:
+#    plugin:
+#        springsecurity:
+#            password:
+#                algorithm: bcrypt
+#            userLookup:
+#                userDomainClassName: facturation.User
+#                authorityJoinClassName: facturation.UserRole
+#            authority:
+#                className: facturation.Role
+#            controllerAnnotations:
+#                staticRules:
+#                  - {pattern: /error, access: [permitAll]}
+#                  - {pattern: /shutdown, access: [permitAll]}
+#                  - {pattern: /assets/**, access: [permitAll]}
+#                  - {pattern: /**/js/**, access: [permitAll]}
+#                  - {pattern: /**/css/**, access: [permitAll]}
+#                  - {pattern: /**/images/**, access: [permitAll]}
+#                  - {pattern: /**/favicon.ico, access: [permitAll]}
+#            filterChain:
+#                chainMap:
+#                  - {pattern: /assets/**, filters: none}
+#                  - {pattern: /**/js/**, filters: none}
+#                  - {pattern: /**/css/**, filters: none}
+#                  - {pattern: /**/images/**, filters: none}
+#                  - {pattern: /**/favicon.ico, filters: none}
+#                  - {pattern: /**, filters: JOINED_FILTERS}
+

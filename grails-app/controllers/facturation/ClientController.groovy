@@ -9,7 +9,9 @@ class ClientController extends AppController {
 
 	def index(ClientCommand command) {
 		def clients = clientService.search(command, pagination())
-		render view: 'index', model: [command: command, clients: clients]
+		def familles = clientService.groupFamille()
+		render view: 'index', model: [command: command, clients: clients,
+			familles: familles]
 	}
 
 	def globalSearch(String value) {
@@ -34,7 +36,9 @@ class ClientController extends AppController {
 		if (!client.code) {
 			client.code = clientService.newCodeClient()
 		}
-		render view: 'edit', model: [client: client, modeEnvois: ModeEnvoi.list(), modeReglements: ModeReglement.list()]
+		def familles = clientService.groupFamille()
+		render view: 'edit', model: [client: client, modeEnvois: ModeEnvoi.list(),
+			modeReglements: ModeReglement.list(), familles: familles]
 	}
 
 	@ExceptionHandler

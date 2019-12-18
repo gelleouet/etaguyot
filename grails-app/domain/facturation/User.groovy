@@ -31,5 +31,6 @@ class User implements Serializable, Validateable {
 	static mapping = {
 		table "`user`"
 		password column: '`password`'
+		username unique: true
 	}
 }

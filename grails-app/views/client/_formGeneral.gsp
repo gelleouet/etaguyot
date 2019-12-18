@@ -36,7 +36,9 @@
 <div class="form-group row">
 	<label class="col-3 col-form-label">Famille</label>
 	<div class="col-9">
-		<g:textField name="famille" value="${ client?.famille }" class="form-control" placeholder="Famille" maxlength="255"/>
+		<g:select name="famille" value="${ client?.famille }" class="form-control app-combobox" placeholder="Famille" from="${ familles }"
+			data-tags="true" data-placeholder="Famille" noSelection="['': ' ']"/>
+		<small class="text-muted">Sélectionnez une famille existante dans la liste ou saisissez une nouvelle valeur</small>
 	</div>
 </div>
 

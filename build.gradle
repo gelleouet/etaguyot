@@ -11,7 +11,7 @@ buildscript {
 }
 
 version "0.0.1"
-group "etaguyot"
+group "facturation"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
@@ -33,11 +33,14 @@ configurations {
 }
 
 dependencies {
-	// user
+	// USER
+	// ------------------------------------------------------------------------
 	compile "org.grails.plugins:spring-security-core:4.0.0.RC2"
+	// paquet pour les méthodes spéciales sur Date (ex : clearTime(), etc.)
+	compile "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
 	
-	
-	//default
+	// DEFAULT
+	// ------------------------------------------------------------------------
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"

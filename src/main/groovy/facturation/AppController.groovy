@@ -2,6 +2,7 @@ package facturation
 
 import java.lang.reflect.Method
 
+import grails.core.GrailsApplication
 import grails.plugin.springsecurity.annotation.Secured
 
 /**
@@ -10,6 +11,10 @@ import grails.plugin.springsecurity.annotation.Secured
  */
 @Secured("isAuthenticated()")
 abstract class AppController {
+
+	GrailsApplication grailsApplication
+
+
 	/**
 	 * Controle des erreurs de validation et de binding.
 	 * A appeler en 1er dans une action du controller
@@ -53,7 +58,12 @@ abstract class AppController {
 	 */
 	Map pagination() {
 		def offset = params?.offset ?: 0
-		def max = params?.max ?: 25
+		def max = params?.max ?: grailsApplication.config.app.pagination.max
+
+		//reinject les valeur dans la request
+		params.max = max
+		params.offset = offset
+
 		[offset: offset, max: max]
 	}
 

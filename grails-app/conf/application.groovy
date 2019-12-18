@@ -1,3 +1,8 @@
+// !! IMPORTANT !!
+// A compléter aussi dans application.yml pour le démarrage Sprin Boot depuis
+// la classe conf/Application.groovy car depuis cette classe, le fichier
+// application.groovy n'est pas chargé
+
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.password.algorithm = 'bcrypt'
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'facturation.User'

@@ -8,4 +8,5 @@ beans = {
 	passwordEncoder(org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder)
 
 	userPasswordEncoderListener(UserPasswordEncoderListener)
+
 }

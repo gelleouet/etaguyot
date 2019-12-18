@@ -5,11 +5,10 @@
     </head>
     
     <content tag="subheaderTitle">
-   		<g:form class="form-inline" name="client-index-form">
+   		<g:form class="form-inline" name="article-index-form">
    			<label>Rechercher</label>
    			<g:textField name="code" value="${ command.code }" class="form-control ml-2 small" placeholder="Code"/>
-   			<g:textField name="raisonSociale" value="${ command.raisonSociale }" class="form-control ml-2 medium" placeholder="Raison sociale"/>
-   			<g:textField name="email" value="${ command.email }" class="form-control ml-2 medium" placeholder="Email"/>
+   			<g:textField name="libelle" value="${ command.libelle }" class="form-control ml-2 medium" placeholder="Libellé"/>
    			<g:textField name="famille" value="${ command.famille }" class="form-control ml-2 medium" placeholder="Famille"/>
    			<button class="btn btn-outline-brand"><i class="fa fa-search"></i></button>
    		</g:form>
@@ -23,32 +22,32 @@
     
     <body>
     	<g:applyLayout name="portlet">
-    		<content tag="portletTitle"><i class="fa fa-address-card fa-lg"></i>&nbsp;Clients</content>
+    		<content tag="portletTitle"><i class="fa fa-shopping-cart"></i>&nbsp;Articles</content>
     		
     		<content tag="portletBody">
-    			<app:datatable elementId="client-datatable" value="${ clients }">
+    			<app:datatable elementId="article-datatable" value="${ articles }">
     				<thead>
     					<tr>
-    						<th>Raison sociale</th>
+    						<th>Libellé</th>
     						<th>Code</th>
     						<th>Famille</th>
-    						<th>Email</th>
-    						<th>Tel</th>
-    						<th>Adresse</th>
+    						<th>Unité</th>
+    						<th>Prix HT</th>
+    						<th>TVA</th>
     						<th data-orderable="false" data-role="action">Actions</th>
     					</tr>
     				</thead>
     				<tbody>
-    					<g:each var="client" in="${ clients }">
+    					<g:each var="article" in="${ articles }">
     						<tr>
-	    						<td>${ client.raisonSociale }</td>
-	    						<td>${ client.code }</td>
-	    						<td>${ client.famille }</td>
-	    						<td>${ client.email }</td>
-	    						<td>${ client.telephone }</td>
-	    						<td>${ client.codePostal } ${ client.ville }</td>
+	    						<td>${ article.libelle }</td>
+	    						<td>${ article.code }</td>
+	    						<td>${ article.famille }</td>
+	    						<td>${ article.unite }</td>
+	    						<td><g:if test="${ article.prixHT != null }">${ article.prixHT }€</g:if></td>
+	    						<td><g:if test="${ article.tauxTVA != null }">${ article.tauxTVA }%</g:if></td>
 	    						<td>
-	    							<g:link action="edit" id="${ client.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Modifier">
+	    							<g:link action="edit" id="${ article.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Modifier">
 			                          <i class="la la-edit"></i>
 			                        </g:link>
 	    						</td>
@@ -56,6 +55,7 @@
     					</g:each>
     				</tbody>
     			</app:datatable>
+    			
     		</content>
     	</g:applyLayout>
         

@@ -7,7 +7,7 @@ class DashboardController extends AppController {
 
 	private static Map controllerPrefix = [
 		"c": "client",
-		"p": "produit",
+		"a": "article",
 		"f": "facture",
 	]
 

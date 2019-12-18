@@ -15,17 +15,15 @@ class ClientService extends AppService<Client> {
 			if (command.email) {
 				ilike 'email', QueryUtils.decorateMatchAll(command.email)
 			}
+			if (command.famille) {
+				ilike 'famille', QueryUtils.decorateMatchAll(command.famille)
+			}
 
 			order 'raisonSociale'
 		}
 	}
 
 
-	/**
-	 * Calcul un nouveau code client
-	 * 
-	 * @return
-	 */
 	String newCodeClient() {
 		def row = Client.executeQuery("SELECT max(code) from Client")
 		String newCode = "0001"
@@ -36,5 +34,16 @@ class ClientService extends AppService<Client> {
 		}
 
 		return newCode
+	}
+
+
+	List<String> groupFamille() {
+		Client.createCriteria().list {
+			isNotNull "famille"
+			projections {
+				groupProperty "famille"
+			}
+			order "famille"
+		}
 	}
 }

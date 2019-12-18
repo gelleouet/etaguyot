@@ -2,7 +2,7 @@
 <div id="kt_header" class="kt-header kt-grid__item kt-grid kt-grid--ver  kt-header--fixed " >
 	<!-- begin:: Brand -->
 	<div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
-		<g:link uri="/">
+		<g:link uri="/" title="Accueil">
 			<asset:image src="logo-eta-white.png"/>
 		</g:link>
 	</div>
@@ -15,27 +15,27 @@
 	        <ul class="kt-menu__nav ">
 	            <li class="kt-menu__item ">
 	            	<g:link controller="client" class="kt-menu__link">
-	            		<span class="kt-menu__link-text"><i class="fa fa-address-card fa-lg"></i>&nbsp;&nbsp;Clients</span>
+	            		<span class="kt-menu__link-text"><i class="fa fa-address-card fa-lg"></i>&nbsp;&nbsp;<span style="text-decoration:underline">C</span>lients</span>
 	            	</g:link>
 				</li>
 	            <li class="kt-menu__item ">
-	            	<g:link controller="produit" class="kt-menu__link">
-	            		<span class="kt-menu__link-text"><i class="fab fa-product-hunt fa-lg"></i>&nbsp;&nbsp;Produits</span>
+	            	<g:link controller="article" class="kt-menu__link">
+	            		<span class="kt-menu__link-text"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<span style="text-decoration:underline">A</span>rticles</span>
 	            	</g:link>
 				</li>
 	            <li class="kt-menu__item ">
 	            	<g:link controller="devis" class="kt-menu__link disabled">
-	            		<span class="kt-menu__link-text"><i class="fa fa-file-invoice fa-lg"></i>&nbsp;&nbsp;Devis</span>
+	            		<span class="kt-menu__link-text"><i class="fa fa-file-invoice fa-lg"></i>&nbsp;&nbsp;<span style="text-decoration:underline">D</span>evis</span>
 	            	</g:link>
 				</li>
 				<li class="kt-menu__item ">
 	            	<g:link controller="facture" class="kt-menu__link">
-	            		<span class="kt-menu__link-text"><i class="fa fa-file-invoice-dollar fa-lg"></i>&nbsp;&nbsp;Factures</span>
+	            		<span class="kt-menu__link-text"><i class="fa fa-file-invoice-dollar fa-lg"></i>&nbsp;&nbsp;<span style="text-decoration:underline">F</span>actures</span>
 	            	</g:link>
 				</li>
 	            <li class="kt-menu__item ">
 	            	<g:link controller="reglement" class="kt-menu__link">
-	            		<span class="kt-menu__link-text"><i class="fa fa-money-check-alt fa-lg"></i>&nbsp;&nbsp;Règlements</span>
+	            		<span class="kt-menu__link-text"><i class="fa fa-money-check-alt fa-lg"></i>&nbsp;&nbsp;<span style="text-decoration:underline">R</span>èglements</span>
 	            	</g:link>
 				</li>
 			</ul>

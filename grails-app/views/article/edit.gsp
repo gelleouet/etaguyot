@@ -8,34 +8,34 @@
     <content tag="subheaderTitle">
     	<div class="kt-subheader__breadcrumbs">
     		<g:link action="index" class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--home">
-	   			Clients
+	   			Articles
 	   		</g:link>
 	   		<span class="kt-subheader__breadcrumbs-separator"></span>
-	   		<g:link action="edit" id="${ client?.id }" class="kt-subheader__breadcrumbs-link">
-	   			${ client?.id ? client.raisonSociale : 'Nouveau client' }
+	   		<g:link action="edit" id="${ article?.id }" class="kt-subheader__breadcrumbs-link">
+	   			${ article?.id ? article.libelle : 'Nouvel article' }
 	   		</g:link>
     	</div>
    	</content>
     
     
     <content tag="subheaderToolbar">
-    	<g:if test="${ client?.id }">
+    	<g:if test="${ article?.id }">
 	   		<a href="#" class="btn btn-default btn-sm btn-bold btn-upper">
 	   			<i class="fa fa-copy"></i>Dupliquer
 	   		</a>
-	   		<g:link action="delete" id="${ client.id }" class="btn btn-outline-danger btn-sm btn-bold btn-upper confirm-button">
+	   		<g:link action="delete" id="${ article.id }" class="btn btn-outline-danger btn-sm btn-bold btn-upper confirm-button">
 	   			<i class="la la-trash"></i>Supprimer
 	   		</g:link>
    		</g:if>
    	</content>
     
     <body>
-    	<g:form action="save" name="client-edit-form" class="kt-form">
+    	<g:form action="save" name="article-edit-form" class="kt-form">
     	
-    		<g:hiddenField name="id" value="${ client?.id }"/>
+    		<g:hiddenField name="id" value="${ article?.id }"/>
     	
 	    	<g:applyLayout name="portlet" params="['footerSolid': true]">
-	    		<content tag="portletTitle"><i class="fa fa-address-card fa-lg"></i>&nbsp;${ client?.id ? client.raisonSociale : 'Nouveau client' }</content>
+	    		<content tag="portletTitle"><i class="fa fa-shopping-cart"></i>&nbsp;${ article?.id ? article.libelle : 'Nouvel article' }</content>
 	    		
 	    		<content tag="portletToolbar">
 	    			<g:link class="btn btn-secondary kt-margin-r-10">
@@ -52,20 +52,9 @@
 								<div class="kt-section__body">
 									<h3 class="kt-section__title">Informations générales</h3>
 									
-									<g:render template="formGeneral"></g:render>
+									<g:render template="form"></g:render>
 								</div>
 							</div>
-							
-							<div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
-							
-							<div class="kt-section kt-section">
-								<div class="kt-section__body">
-									<h3 class="kt-section__title">Informations facturation</h3>
-									
-									<g:render template="formFacturation"></g:render>
-								</div>
-							</div>
-							
 	   					</div>
 	   					<div class="col-xl-2"></div>
 	   				</div>
