@@ -41,13 +41,13 @@
 <div class="form-group row">
 	<label class="col-3 col-form-label">Prix unitaire HT (€)</label>
 	<div class="col-3">
-		<g:field type="text" name="prixHT" value="${ article?.prixHT }" class="form-control"/>
+		<g:field type="text" name="prixHT" value="${ app.format2Decimal(number: article?.prixHT) }" class="form-control number"/>
 	</div>
 </div>
 
 <div class="form-group row">
 	<label class="col-3 col-form-label">Taux TVA (%)</label>
 	<div class="col-3">
-		<g:field type="number" name="tauxTVA" value="${ article?.tauxTVA }" class="form-control" step="any"/>
+		<g:field type="text" name="tauxTVA" value="${ app.format2Decimal(number: article?.tauxTVA) }" class="form-control number"/>
 	</div>
 </div>

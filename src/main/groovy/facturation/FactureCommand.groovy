@@ -1,5 +1,6 @@
 package facturation
 
+import grails.databinding.BindUsing
 import grails.validation.Validateable
 
 /**

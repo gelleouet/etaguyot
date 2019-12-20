@@ -6,6 +6,13 @@ class ClientService extends AppService<Client> {
 
 	List<Client> search(ClientCommand command, Map pagination) {
 		return Client.createCriteria().list(pagination) {
+			if (command.term) {
+				or {
+					ilike 'code', QueryUtils.decorateMatchAll(command.term)
+					ilike 'raisonSociale', QueryUtils.decorateMatchAll(command.term)
+				}
+			}
+
 			if (command.code) {
 				ilike 'code', QueryUtils.decorateMatchAll(command.code)
 			}

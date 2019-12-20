@@ -28,14 +28,11 @@ class FactureController extends AppController {
 	}
 
 	def edit(Facture facture) {
-		facture = getRequestCommand(facture ?: new Facture())
-		if (!facture.code) {
-			facture.code = factureService.newCodeFacture()
-		}
-		def familles = factureService.groupFamille()
-		def unites = factureService.groupUnite()
-		render view: 'edit', model: [facture: facture, familles: familles,
-			unites: unites]
+		facture = getRequestCommand(facture ?: factureService.createNewFacture(TypeFactureEnum.facture))
+		def modeReglements = ModeReglement.list()
+		def clients = facture?.client ? [facture.client]: []
+		render view: 'edit', model: [facture: facture, modeReglements: modeReglements,
+			clients: clients]
 	}
 
 	@ExceptionHandler

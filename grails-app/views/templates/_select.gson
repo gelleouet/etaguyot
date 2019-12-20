@@ -1,0 +1,14 @@
+model {
+	List selects = []
+}
+
+json {
+	results {
+		id selects.id
+		text selects.value
+		if (selects.hasProperty('code') && selects.code) {
+			
+		}
+	}
+	
+}

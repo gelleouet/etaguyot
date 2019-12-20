@@ -10,6 +10,7 @@ class Facture implements Validateable {
 
 
 	String numero
+	String numeroBrouillon
 	Client client
 	Date dateFacture
 	Date dateEcheance
@@ -20,7 +21,7 @@ class Facture implements Validateable {
 	Double totalTVA
 	// OU logique des différents status (afin d'avoir plusieurs flags en même temps)
 	int statut
-	TypeFactureEnum type
+	TypeFactureEnum type = TypeFactureEnum.facture
 
 	Set<FactureTva> tvas = []
 	Set<FactureArticle> articles = []
@@ -36,6 +37,7 @@ class Facture implements Validateable {
 
 	static mapping = {
 		numero length: 16
+		numeroBrouillon length: 16
 		commentaire type: 'text'
 		type enumType: 'string', length: 16
 		dateFacture index: 'facture_idx'

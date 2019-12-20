@@ -57,8 +57,15 @@ abstract class AppController {
 	 * @return
 	 */
 	Map pagination() {
-		def offset = params?.offset ?: 0
+		def offset
 		def max = params?.max ?: grailsApplication.config.app.pagination.max
+
+		// pagination en général des appels ajax
+		if (params.page != null && params.page.isInteger()) {
+			offset = params.'int'('page') > 0 ? params.'int'('page') - 1 : 0
+		} else {
+			offset = params?.offset ?: 0
+		}
 
 		//reinject les valeur dans la request
 		params.max = max

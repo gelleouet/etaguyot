@@ -1,11 +1,38 @@
 package facturation
 
+import java.text.SimpleDateFormat
+
 /**
  * @author gelleouet <gregory.elleouet@gmail.com>
  *
  */
 class DateUtils {
 	static final String FORMAT_DATE_USER = "dd/MM/yyyy"
+	static final String FORMAT_DATE_PICKER = "yyyy-MM-dd"
+
+
+	static Date parseRange(String range, DateRangePartEnum part) {
+		if (!range) {
+			return null
+		}
+
+		def parts = range.split("-")
+
+		if (parts.length != 2) {
+			return null
+		}
+
+		if (part == DateRangePartEnum.start) {
+			return parseDateUser(parts[0].trim())
+		} else {
+			return parseDateUser(parts[1].trim())
+		}
+	}
+
+
+	static Date parseDateUser(String source) {
+		new SimpleDateFormat(FORMAT_DATE_USER).parse(source)
+	}
 
 
 	static Date lastDayInMonth(Date date) {

@@ -56,6 +56,7 @@ jQuery(document).ready(function() {
 	initConfirmButton()
 	initComboBox()
 	initDateRangePicker()
+	initLocaleTypeNumber()
 })
 
 

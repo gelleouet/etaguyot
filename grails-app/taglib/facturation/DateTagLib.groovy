@@ -39,7 +39,7 @@ class DateTagLib {
 	 * @attr date REQUIRED la date à formatter
 	 */
 	def formatPicker = {attrs, body ->
-		g.formatDate(date: attrs.date, format: 'yyyy-MM-dd')
+		g.formatDate(date: attrs.date, format: DateUtils.FORMAT_DATE_PICKER)
 	}
 
 

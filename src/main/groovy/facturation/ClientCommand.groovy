@@ -11,11 +11,14 @@ class ClientCommand implements Validateable {
 	String raisonSociale
 	String email
 	String famille
+	// requete ajax
+	String term
 
 	static constraints = {
 		code nullable: true
 		raisonSociale nullable: true
 		email nullable: true
 		famille nullable: true
+		term nullable: true
 	}
 }

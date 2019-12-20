@@ -2,7 +2,7 @@
 	width: 68.5px;
 }
 
-.form-group.required label:after {
+.form-group.required > label:after {
 	content: " *";
 	color: #de350b;
 	font-size: 12px;
@@ -15,11 +15,24 @@ span.required {
 	font-weight: bold;
 }
 
-form.form-inline input.form-control.medium, form.form-inline select.form-control.medium {
+form input.form-control.medium, form select.form-control.medium {
 	width: 200px;
 }
 
 
-form.form-inline input.form-control.small, form.form-inline select.form-control.small {
+form input.form-control.small, form select.form-control.small {
 	width: 125px;
+}
+
+.parent-flow {
+	position: relative;
+	height: 0;
+}
+
+.address-area {
+	border: 1px dashed #e2e5ec;
+	height: 170px; 
+	width: 100%; 
+	position: absolute;
+	padding: 10px;
 }

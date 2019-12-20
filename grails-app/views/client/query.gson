@@ -1,0 +1,16 @@
+model {
+    List<Client> clientList = []
+    int totalCount
+}
+
+json {
+	results clientList, { Client client ->
+		id client.id
+		text client.raisonSociale
+		code client.code
+	}
+	pagination {
+		totalCount totalCount
+		more clientList.size() < totalCount && clientList.size() > 0
+	}
+}

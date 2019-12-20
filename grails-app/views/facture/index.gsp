@@ -6,9 +6,11 @@
     
     <content tag="subheaderTitle">
    		<g:form class="form-inline" name="facture-index-form">
+   			<g:hiddenField name="dateDebut" value="${ app.formatPicker(date: command.dateDebut) }"/>
+   			<g:hiddenField name="dateFin" value="${ app.formatPicker(date: command.dateFin) }"/>
    			<label>Rechercher</label>
    			<input type="text" name="daterange" class="form-control app-daterangepicker" data-startDate="${ app.formatUser(date: command.dateDebut) }"
-   				data-endDate="${ app.formatUser(date: command.dateFin) }">
+   				data-endDate="${ app.formatUser(date: command.dateFin) }" data-startDateId="dateDebut" data-endDateId="dateFin">
    			<g:textField name="numero" value="${ command.numero }" class="form-control ml-2 small" placeholder="N°"/>
    			<button class="btn btn-outline-brand"><i class="fa fa-search"></i></button>
    		</g:form>

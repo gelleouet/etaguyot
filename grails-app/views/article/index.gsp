@@ -44,8 +44,8 @@
 	    						<td>${ article.code }</td>
 	    						<td>${ article.famille }</td>
 	    						<td>${ article.unite }</td>
-	    						<td><g:if test="${ article.prixHT != null }">${ article.prixHT }€</g:if></td>
-	    						<td><g:if test="${ article.tauxTVA != null }">${ article.tauxTVA }%</g:if></td>
+	    						<td><g:if test="${ article.prixHT != null }">${ app.format2Decimal(number: article.prixHT) }€</g:if></td>
+	    						<td><g:if test="${ article.tauxTVA != null }">${ app.format2Decimal(number: article.tauxTVA) }%</g:if></td>
 	    						<td>
 	    							<g:link action="edit" id="${ article.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Modifier">
 			                          <i class="la la-edit"></i>

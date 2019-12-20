@@ -7,6 +7,12 @@ class ClientController extends AppController {
 
 	ClientService clientService
 
+
+	def query(ClientCommand command) {
+		def clients = clientService.search(command, pagination())
+		respond clients, model: [totalCount: clients.totalCount]
+	}
+
 	def index(ClientCommand command) {
 		def clients = clientService.search(command, pagination())
 		def familles = clientService.groupFamille()

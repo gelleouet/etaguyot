@@ -23,7 +23,7 @@
 <div class="form-group row">
 	<label class="col-3 col-form-label">Mode règlement</label>
 	<div class="col-6">
-		<g:select name="modeReglement.id" value="${ client?.modeReglement?.id }" from="${ modeReglements }"class="form-control"
+		<g:select name="modeReglement.id" value="${ client?.modeReglement?.id }" from="${ modeReglements }" class="form-control"
 			optionKey="id" optionValue="libelle" noSelection="[null: ' ']"/>
 	</div>
 </div>
@@ -31,7 +31,7 @@
 <div class="form-group row">
 	<label class="col-3 col-form-label">Mode envoi</label>
 	<div class="col-6">
-		<g:select name="modeEnvoi.id" value="${ client?.modeEnvoi?.id }" from="${ modeEnvois }"class="form-control"
+		<g:select name="modeEnvoi.id" value="${ client?.modeEnvoi?.id }" from="${ modeEnvois }" class="form-control"
 			optionKey="id" optionValue="libelle" noSelection="[null: ' ']"/>
 	</div>
 </div>
