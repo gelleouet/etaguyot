@@ -50,8 +50,8 @@
 	    						<td><g:formatDate date="${ facture.dateFacture }" format="dd/MM/yyyy"/></td>
 	    						<td><g:formatDate date="${ facture.dateEcheance }" format="dd/MM/yyyy"/></td>
 	    						<td>${ facture.client.raisonSociale }</td>
-	    						<td>${ facture.totalHT }</td>
-	    						<td>${ facture.totalTTC() }</td>
+	    						<td>${ app.format2Decimal(number: facture.totalHT) }€</td>
+	    						<td>${ app.format2Decimal(number: facture.totalTTC()) }€</td>
 	    						<td>
 	    							<g:link action="edit" id="${ facture.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Modifier">
 			                          <i class="la la-edit"></i>

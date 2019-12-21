@@ -24,7 +24,8 @@
     <g:layoutHead/>
 </head>
 
-<body  class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader-mobile--fixed kt-aside--enabled kt-aside--left kt-aside--fixed kt-aside--offcanvas-default kt-page--loading"  >
+<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader-mobile--fixed kt-aside--enabled kt-aside--left kt-aside--fixed kt-aside--offcanvas-default kt-page--loading" 
+	data-onload="${pageProperty(name: 'body.data-onload')}">
 
 	<g:applyLayout name="header-mobile"/>
 
@@ -56,6 +57,7 @@
 				<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
 					<div class="kt-container  kt-grid__item kt-grid__item--fluid">
 						<g:applyLayout name="error"/>
+						<div id="ajax-error" class="d-none">error</div>
 					
 						<g:layoutBody/>	
 					</div>

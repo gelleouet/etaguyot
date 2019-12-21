@@ -15,14 +15,16 @@
 	<label class="col-2 col-form-label">Client</label>
 	<div class="col-5">
 		<g:select name="client.id" value="${ facture?.client?.id }" from="${ clients }" class="form-control app-combobox"
-			optionKey="id" optionValue="raisonSociale" dataAttrs="['code': { it.code }]"
-			data-ajax--url="${ createLink(action: 'query', controller: 'client') }" data-placeholder="Sélectionner un client">
+			optionKey="id" optionValue="raisonSociale" dataAttrs="['code': { it.code }]" data-placeholder="Sélectionner un client"
+			data-ajax--url="${ createLink(action: 'query', controller: 'client') }" data-ajax--global="false"
+			data-url="${ createLink(action: 'changeClient') }" data-onchange="onChangeClientFacture">
 			<option></option>
 		</g:select>
+		<small class="text-muted">Recherche possible sur raison sociale ou code client</small>
 	</div>
 	<div class="col-5">
 		<div class="parent-flow">
-			<div class="address-area">
+			<div class="facture-address-area">
 				<div class="row">
 					<div class="col-8">
 						<label><i class="fa fa-location-arrow"></i> Adresse</label>
@@ -60,30 +62,46 @@
 <div class="form-group row required">
 	<label class="col-2 col-form-label">Date</label>
 	<div class="col-5">
-		<g:field type="date" name="dateFacture" value="${ app.formatPicker(date: facture?.dateFacture) }" class="form-control medium" required="true"/>
+		<g:field type="date" name="dateFacture" value="${ app.formatPicker(date: facture?.dateFacture) }" 
+			class="form-control medium" required="true"/>
 	</div>
 </div>
 
 <div class="form-group row required">
 	<label class="col-2 col-form-label">Date d'échéance</label>
 	<div class="col-5">
-		<g:field type="date" name="dateEcheance" value="${ app.formatPicker(date: facture?.dateEcheance) }" class="form-control medium" required="true"/>
+		<g:field type="date" name="dateEcheance" value="${ app.formatPicker(date: facture?.dateEcheance) }" 
+			class="form-control medium" required="true"/>
 	</div>
 </div>
 
 <div class="form-group row">
 	<label class="col-2 col-form-label">Référence</label>
 	<div class="col-10">
-		<g:textField name="reference" value="${ facture?.reference }" class="form-control" placeholder="Référence" maxlength="255"/>
+		<g:textField name="reference" value="${ facture?.reference }" class="form-control" maxlength="255"
+			placeholder="Saisir une référence"/>
 	</div>
 </div>
 
 <div class="form-group row">
 	<label class="col-2 col-form-label">Commentaire</label>
 	<div class="col-10">
-		<g:textArea name="commentaire" value="${ facture?.commentaire }" class="form-control" placeholder="Commentaire" rows="2"/>
+		<g:textArea name="commentaire" value="${ facture?.commentaire }" class="form-control" rows="2"
+			placeholder="Saisir un commentaire"/>
 	</div>
 </div>
+
+
+<div>
+	<a id="facture-add-article-button" class="btn btn-secondary btn" data-url="${ createLink(action: 'addArticle') }">
+		<i class="fa fa-plus"></i>&nbsp;Article
+	</a>
+</div>
+
+<div id="facture-article-ajax-form">
+	<g:render template="formArticles"/>
+</div>
+
 
 <div class="row">
 	<div class="col-2"></div>
@@ -106,6 +124,19 @@
 			<label class="col-4 col-form-label kt-font-bold kt-font-brand">Total TVA (€)</label>
 			<div class="col-8">
 				<g:field type="text" name="totalTVA" value="${ app.format2Decimal(number: facture?.totalTVA) }" class="form-control number kt-font-bold kt-font-brand"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-2"></div>
+	<div class="col-5"></div>
+	<div class="col-5">
+		<div class="form-group row">
+			<label class="col-4 col-form-label kt-font-bold kt-font-brand">Total TTC (€)</label>
+			<div class="col-8">
+				<g:field type="text" name="totalTTC" value="${ app.format2Decimal(number: facture?.totalTTC()) }" class="form-control number kt-font-bold kt-font-brand"/>
 			</div>
 		</div>
 	</div>

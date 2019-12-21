@@ -7,7 +7,7 @@
     <content tag="subheaderTitle">
    		<g:form class="form-inline" name="client-index-form">
    			<label>Rechercher</label>
-   			<g:textField name="code" value="${ command.code }" class="form-control ml-2 small" placeholder="Code"/>
+   			<g:textField name="code" value="${ command.code }" class="form-control ml-2 small" placeholder="Code" autofocus="true"/>
    			<g:textField name="raisonSociale" value="${ command.raisonSociale }" class="form-control ml-2 medium" placeholder="Raison sociale"/>
    			<g:textField name="email" value="${ command.email }" class="form-control ml-2 medium" placeholder="Email"/>
    			<g:textField name="famille" value="${ command.famille }" class="form-control ml-2 medium" placeholder="Famille"/>

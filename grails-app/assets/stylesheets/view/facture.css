@@ -1,0 +1,7 @@
+.facture-address-area {
+	border: 1px dashed #e2e5ec;
+	height: 170px; 
+	width: 100%; 
+	position: absolute;
+	padding: 10px;
+}

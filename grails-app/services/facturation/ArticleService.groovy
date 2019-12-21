@@ -6,6 +6,13 @@ class ArticleService extends AppService<Article> {
 
 	List<Article> search(ArticleCommand command, Map pagination) {
 		return Article.createCriteria().list(pagination) {
+			if (command.term) {
+				or {
+					ilike 'code', QueryUtils.decorateMatchAll(command.term)
+					ilike 'libelle', QueryUtils.decorateMatchAll(command.term)
+				}
+			}
+
 			if (command.code) {
 				ilike 'code', QueryUtils.decorateMatchAll(command.code)
 			}
@@ -16,7 +23,7 @@ class ArticleService extends AppService<Article> {
 				ilike 'famille', QueryUtils.decorateMatchAll(command.famille)
 			}
 
-			order 'libelle'
+			order pagination.sort ?: 'libelle'
 		}
 	}
 

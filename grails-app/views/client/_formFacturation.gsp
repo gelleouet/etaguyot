@@ -15,7 +15,7 @@
 <div class="form-group row">
 	<label class="col-3 col-form-label">Echéance</label>
 	<div class="col-3">
-		<g:field type="number" name="echeance" value="${ client?.echeance }" class="form-control"/>
+		<g:field type="number" name="echeance" value="${ client?.echeance }" class="form-control" min="1"/>
 		<small class="form-text text-muted">En nombre de jours</small>
 	</div>
 </div>

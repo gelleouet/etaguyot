@@ -4,6 +4,10 @@ class ArticleController extends AppController {
 
 	ArticleService articleService
 
+	def query(ArticleCommand command) {
+		def articles = articleService.search(command, pagination())
+		respond articles, model: [totalCount: articles.totalCount]
+	}
 
 	def index(ArticleCommand command) {
 		def articles = articleService.search(command, pagination())

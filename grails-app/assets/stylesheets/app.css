@@ -19,9 +19,12 @@ form input.form-control.medium, form select.form-control.medium {
 	width: 200px;
 }
 
-
 form input.form-control.small, form select.form-control.small {
 	width: 125px;
+}
+
+form input.form-control.xsmall, form select.form-control.xsmall {
+	width: 75px;
 }
 
 .parent-flow {
@@ -29,10 +32,3 @@ form input.form-control.small, form select.form-control.small {
 	height: 0;
 }
 
-.address-area {
-	border: 1px dashed #e2e5ec;
-	height: 170px; 
-	width: 100%; 
-	position: absolute;
-	padding: 10px;
-}

@@ -49,4 +49,10 @@ class Facture implements Validateable {
 	Double totalTTC() {
 		totalHT + totalTVA
 	}
+
+
+	Facture clearNotPersistArticles() {
+		articles?.removeAll { it.status == null }
+		return this
+	}
 }

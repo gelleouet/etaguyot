@@ -111,9 +111,9 @@ function formatOption(data) {
 	}
 	
 	if (code) {
-		return $('<div class="row"><div class="col-10 font-weight-bold">' 
+		return $('<div class="row"><div class="col-10 font-weight-bold kt-font-small">' 
 				+ data.text 
-				+ '</div><div class="col text-right font-italic">'
+				+ '</div><div class="col text-right font-italic kt-font-small">'
 				+ code
 				+ '</div></div>')
 	} else {
@@ -125,12 +125,37 @@ function formatOption(data) {
 function initComboBox() {
 	$("select.app-combobox").each(function() {
 		var $this = $(this)
+		var onChange
+		var formatOptionCallback
+		var formatSelectionCallback
+		var ajaxOptions = {}
+		
+		if ($this.attr("data-onchange") && typeof window[$this.attr("data-onchange")]) {
+			onChange = window[$this.attr("data-onchange")]
+		}
+		
+		if ($this.attr("data-format-selection") && typeof window[$this.attr("data-format-selection")]) {
+			formatSelectionCallback = window[$this.attr("data-format-selection")]
+		} else {
+			formatSelectionCallback = formatOption
+		}
+		
+		if ($this.attr("data-format-option") && typeof window[$this.attr("data-format-option")]) {
+			formatOptionCallback = window[$this.attr("data-format-option")]
+		} else {
+			formatOptionCallback = formatOption
+		}
+		
+		if ($this.attr("data-processResults") && typeof window[$this.attr("data-processResults")]) {
+			ajaxOptions.processResults = window[$this.attr("data-processResults")]
+		} 
 		
 		$this.select2({
 			openOnEnter: false,
 			allowClear: $this.attr('data-tags') == 'true',
-			templateResult: formatOption,
-			templateSelection: formatOption,
+			templateResult: formatOptionCallback,
+			templateSelection: formatSelectionCallback,
+			ajax: ajaxOptions,
 			matcher: function(params, data) {
 				// If there are no search terms, return all of the data
 			    if ($.trim(params.term) === '') {
@@ -148,7 +173,7 @@ function initComboBox() {
 				if (!isNaN(params.term)) {
 					var intValue = parseInt(params.term)
 					
-					if (data.element.dataset.code) {
+					if (data.element.dataset.code && !isNaN(data.element.dataset.code)) {
 						match = (intValue == parseInt(data.element.dataset.code))
 					} else {
 						match = (params.term == data.id)
@@ -161,6 +186,13 @@ function initComboBox() {
 					}
 				}
 				
+			    // recherche texte sur le code
+			    if (data.element.dataset.code) {
+			    	if (data.element.dataset.code.toLowerCase().indexOf(params.term.toLowerCase()) != -1) {
+				    	return data
+				    }
+			    }
+			    
 				// si rien trouvé plus haut : recherche normale
 			    if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) != -1) {
 			    	return data
@@ -170,6 +202,13 @@ function initComboBox() {
 			    return null;
 			}
 		})
+		
+		if (onChange) {
+			$this.on('select2:select', function(event) {
+				var data = event.params.data
+				onChange($this, data)
+			})
+		}
 	})
 }
 
@@ -222,3 +261,36 @@ function initLocaleTypeNumber() {
 		$this.val($this.val().replace(/\./g, ','))
 	})
 }
+
+
+var errorAjaxFunction = function(jqXHR, textStatus, errorThrown) {
+	if (jqXHR.responseText) {
+		$('#ajax-error').html(jqXHR.responseText);
+	} else {
+		$('#ajax-error').html(errorThrown);
+	}
+	$('#ajax-error').show();
+};
+
+
+function ajaxSubmitForm(eltSrcId, formId, divDstId, onSuccess) {
+	var urlAction = $(eltSrcId).attr('data-url');
+	var datas = $(formId).serializeArray();
+	
+	jQuery.ajax({
+		type: 'POST',
+		data: datas,
+		url: urlAction,
+		success: function(data, textStatus) {
+			if (divDstId) {
+				$(divDstId).html(data);
+			}
+			if (onSuccess) {
+				onSuccess();
+			}
+		},
+		error: errorAjaxFunction
+	});
+}
+
+

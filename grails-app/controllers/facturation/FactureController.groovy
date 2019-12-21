@@ -29,16 +29,19 @@ class FactureController extends AppController {
 
 	def edit(Facture facture) {
 		facture = getRequestCommand(facture ?: factureService.createNewFacture(TypeFactureEnum.facture))
-		def modeReglements = ModeReglement.list()
-		def clients = facture?.client ? [facture.client]: []
-		render view: 'edit', model: [facture: facture, modeReglements: modeReglements,
-			clients: clients]
+		render view: 'edit', model: completeModel([facture: facture])
+	}
+
+	private Map completeModel(Map model) {
+		model.modeReglements = ModeReglement.list()
+		model.clients = model.facture.client ? [model.facture.client]: []
+		return model
 	}
 
 	@ExceptionHandler
 	def save(Facture facture) {
 		checkErrors(this, facture)
-		factureService.save(facture)
+		factureService.saveWithArticles(facture)
 		redirect(action: 'index')
 	}
 
@@ -47,5 +50,20 @@ class FactureController extends AppController {
 		checkErrors(this, facture)
 		factureService.delete(facture)
 		redirect(action: 'index')
+	}
+
+	def changeClient(Facture facture) {
+		factureService.changeClient(facture)
+		render template: 'form', model: completeModel([facture: facture])
+	}
+
+	def addArticle(Facture facture) {
+		factureService.addArticle(facture)
+		render template: 'form', model: completeModel([facture: facture])
+	}
+
+	def changeArticle(Facture facture, int status) {
+		factureService.changeArticle(facture, status)
+		render template: 'form', model: completeModel([facture: facture])
 	}
 }

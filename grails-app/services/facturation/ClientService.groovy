@@ -26,7 +26,7 @@ class ClientService extends AppService<Client> {
 				ilike 'famille', QueryUtils.decorateMatchAll(command.famille)
 			}
 
-			order 'raisonSociale'
+			order pagination.sort ?: 'raisonSociale'
 		}
 	}
 

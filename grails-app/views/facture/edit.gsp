@@ -29,7 +29,7 @@
    		</g:if>
    	</content>
     
-    <body>
+    <body data-onload="onLoadFactureEdit">
     	<g:form action="save" name="facture-edit-form" class="kt-form">
     	
     		<g:hiddenField name="id" value="${ facture?.id }"/>
@@ -50,7 +50,9 @@
 	   					<div class="col-xl-8">
 	   						<div class="kt-section kt-section--first">
 								<div class="kt-section__body">
-									<g:render template="form"></g:render>
+									<div id="facture-ajax-form">
+										<g:render template="form"></g:render>
+									</div>
 								</div>
 							</div>
 	   					</div>

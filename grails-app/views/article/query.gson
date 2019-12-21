@@ -1,0 +1,16 @@
+model {
+    List<Article> articleList = []
+    int totalCount
+}
+
+json {
+	results articleList, { Article article ->
+		id article.id
+		text article.libelle
+		code article.code
+	}
+	pagination {
+		totalCount totalCount
+		more articleList.size() < totalCount && articleList.size() > 0
+	}
+}

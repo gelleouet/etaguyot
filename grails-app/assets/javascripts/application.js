@@ -9,6 +9,7 @@
 //= require scripts.bundle
 //= require datatables.bundle
 //= require app
+//= require_tree view
 //= require_self
 
 
@@ -45,18 +46,40 @@ var KTAppOptions = {
 };
 
 
+(function($) {
+	// Gestion d'un spinner à chaque appel Ajax
+	// Affiche / Masque un élément d'id = ajaxSpinner
+	$(document).ajaxStart(function() {
+		//$('#ajaxSpinner').show()
+	}).ajaxStop(function() {
+		//$('#ajaxSpinner').fadeOut(200);
+		initGlobal()
+	});
+})(jQuery);
+
+
 /**
  * Code à exécuter dès qu"une page est chargée
  */
 jQuery(document).ready(function() {
 	// ne pas afficher de popup en cas d'erreurs mais log error
 	$.fn.dataTable.ext.errMode = 'throw';
+	initGlobal()
 	
+	var $body = $('body')
+	
+	if ($body.attr('data-onload') && typeof window[$body.attr('data-onload')]) {
+		window[$body.attr('data-onload')]()
+	}
+})
+
+
+function initGlobal() {
 	initDataTable()
 	initConfirmButton()
 	initComboBox()
 	initDateRangePicker()
 	initLocaleTypeNumber()
-})
+}
 
 

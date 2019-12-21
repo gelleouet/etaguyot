@@ -12,6 +12,7 @@
 *= require style.bundle
 *= require navy
 *= require app
+*= require_tree view
 *= require_self
 */
 
