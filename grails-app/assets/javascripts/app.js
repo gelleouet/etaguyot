@@ -150,13 +150,12 @@ function initComboBox() {
 			ajaxOptions.processResults = window[$this.attr("data-processResults")]
 		} 
 		
-		$this.select2({
+		var options = {
 			dropdownAutoWidth: true,
 			openOnEnter: false,
 			allowClear: $this.attr('data-tags') == 'true' || $this.attr('data-clear') == 'true',
 			templateResult: formatOptionCallback,
 			templateSelection: formatSelectionCallback,
-			ajax: ajaxOptions,
 			matcher: function(params, data) {
 				// If there are no search terms, return all of the data
 			    if ($.trim(params.term) === '') {
@@ -202,7 +201,13 @@ function initComboBox() {
 			    // Return `null` if the term should not be displayed
 			    return null;
 			}
-		})
+		}
+		
+		if (Object.keys(ajaxOptions).length > 0) {
+			options.ajax = ajaxOptions
+		}
+		
+		$this.select2(options)
 		
 		if (onChange) {
 			$this.on('select2:select', function(event) {
