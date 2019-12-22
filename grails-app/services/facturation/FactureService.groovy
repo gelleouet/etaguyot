@@ -91,7 +91,8 @@ class FactureService extends AppService<Article> {
 		}
 
 		facture.addToArticles(article)
-		return facture
+
+		return changeTarification(facture, 0)
 	}
 
 	Facture removeArticle(Facture facture, int status) {
@@ -99,7 +100,7 @@ class FactureService extends AppService<Article> {
 		facture.articles.removeAll {
 			it.status == status
 		}
-		return facture
+		return changeTarification(facture, status)
 	}
 
 	Facture changeArticle(Facture facture, int status) {
