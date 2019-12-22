@@ -1,11 +1,13 @@
 package facturation
 
 import grails.validation.Validateable
+import groovy.transform.AutoClone
 
 /**
  * @author gelleouet <gregory.elleouet@gmail.com>
  *
  */
+@AutoClone
 class FactureTva implements Validateable {
 	Facture facture
 	Double totalHT

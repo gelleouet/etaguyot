@@ -8,7 +8,18 @@ class FactureService extends AppService<Article> {
 		log.info "Search from ${command.dateDebut.format('dd/MM/yyyy')} to ${command.dateFin.format('dd/MM/yyyy')}"
 
 		return Facture.createCriteria().list(pagination) {
-			join 'client'
+			if (command.numero) {
+				ilike 'numero', QueryUtils.decorateMatchAll(command.numero)
+			} else {
+				between 'dateFacture', command.dateDebut, command.dateFin
+			}
+
+			client {
+				if (command.clientId) {
+					idEq command.clientId
+				}
+			}
+
 			order 'numero', 'desc'
 		}
 	}
@@ -71,25 +82,49 @@ class FactureService extends AppService<Article> {
 
 	Facture addArticle(Facture facture) {
 		facture.clearNotPersistArticles()
-		facture.addToArticles(new FactureArticle())
+		FactureArticle article = new FactureArticle()
+
+		if (facture.articles) {
+			article.ordre = facture.articles.max {
+				it.ordre
+			}.ordre + 1
+		}
+
+		facture.addToArticles(article)
+		return facture
+	}
+
+	Facture removeArticle(Facture facture, int status) {
+		facture.clearNotPersistArticles()
+		facture.articles.removeAll {
+			it.status == status
+		}
 		return facture
 	}
 
 	Facture changeArticle(Facture facture, int status) {
 		facture.clearNotPersistArticles()
-		FactureArticle farticle = facture.articles.find { it.status == status }
+		FactureArticle farticle = facture.articles.find {
+			it.status == status
+		}
 
 		if (farticle) {
 			Article article = farticle.article()
 
 			if (article) {
 				farticle.libelle = article.libelle
+				farticle.commentaire = article.commentaire
 				farticle.unite = article.unite
 				farticle.prixHT = article.prixHT
 				farticle.tauxTVA = article.tauxTVA
 			}
 		}
 
+		return changeTarification(facture, status)
+	}
+
+	Facture changeTarification(Facture facture, int status) {
+		facture.updateTotaux()
 		return facture
 	}
 

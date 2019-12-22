@@ -26,4 +26,13 @@ class FactureCommand implements Validateable {
 		dateDebut = DateUtils.firstDayInYear(now)
 		dateFin = DateUtils.lastDayInYear(now)
 	}
+
+	Client client() {
+		clientId ? Client.read(clientId) : null
+	}
+
+	List<Client> clients() {
+		Client client = client()
+		client ? [client]: []
+	}
 }

@@ -15,6 +15,10 @@ span.required {
 	font-weight: bold;
 }
 
+form input.form-control.medium1, form select.form-control.medium1 {
+	width: 225px;
+}
+
 form input.form-control.medium, form select.form-control.medium {
 	width: 200px;
 }
@@ -30,5 +34,10 @@ form input.form-control.xsmall, form select.form-control.xsmall {
 .parent-flow {
 	position: relative;
 	height: 0;
+}
+
+.font-size-sm {
+	font-size: .875rem;
+	line-height: 1.5;
 }
 

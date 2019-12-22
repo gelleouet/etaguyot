@@ -1,7 +1,9 @@
 package facturation
 
 import grails.validation.Validateable
+import groovy.transform.AutoClone
 
+@AutoClone
 class Client implements Validateable {
 
 	String code

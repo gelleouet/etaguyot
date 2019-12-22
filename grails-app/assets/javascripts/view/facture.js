@@ -10,11 +10,25 @@ function onLoadFactureEdit() {
 	$(document).on('click', '#facture-add-article-button', function() {
 		ajaxSubmitForm($(this), '#facture-edit-form', '#facture-ajax-form')
 	})
+	$(document).on('click', 'a.facture-remove-article-button', function() {
+		if (confirm('Voulez-vous supprimer cet article ?')) {
+			ajaxSubmitForm($(this), '#facture-edit-form', '#facture-ajax-form')
+		}
+	})
+	$(document).on('change', '.facture-update-tarification', function() {
+		var $this = $(this)
+		var thisId = $this.attr('id')
+		formatLocaleNumber($this)
+		ajaxSubmitForm($this, '#facture-edit-form', '#facture-ajax-form', function() {
+			// apres la reconstruction de la page, le $this ne pointe plus sur rien
+			focusNextElement($('#' + escapeSelectorName(thisId)))
+		})
+	})
 }
 
 function formatFactureCodeProduitOption(data) {
 	if (data.code) {
-		return $('<div class="row"><div class="col-10 font-italic" style="font-size:8pt">' 
+		return $('<div class="row"><div class="col-9 font-italic" style="font-size:8pt">' 
 				+ data.text 
 				+ '</div><div class="col text-right font-weight-bold" style="font-size:8pt">'
 				+ data.code
@@ -25,9 +39,9 @@ function formatFactureCodeProduitOption(data) {
 }
 
 function formatFactureCodeProduitSelection(data) {
-	if (data.code) {
+	if (data.id) {
 		return $('<span class="font-weight-bold" style="font-size:8pt">' 
-				+ data.code
+				+ data.id
 				+ '</span>')
 	} else {
 		return data.text

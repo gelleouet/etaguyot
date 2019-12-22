@@ -66,4 +66,14 @@ class FactureController extends AppController {
 		factureService.changeArticle(facture, status)
 		render template: 'form', model: completeModel([facture: facture])
 	}
+
+	def changeTarification(Facture facture, int status) {
+		factureService.changeTarification(facture, status)
+		render template: 'form', model: completeModel([facture: facture])
+	}
+
+	def removeArticle(Facture facture, int status) {
+		factureService.removeArticle(facture, status)
+		render template: 'form', model: completeModel([facture: facture])
+	}
 }

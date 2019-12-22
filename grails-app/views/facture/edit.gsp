@@ -30,7 +30,7 @@
    	</content>
     
     <body data-onload="onLoadFactureEdit">
-    	<g:form action="save" name="facture-edit-form" class="kt-form">
+    	<g:form action="save" name="facture-edit-form" class="kt-form fast-focus">
     	
     		<g:hiddenField name="id" value="${ facture?.id }"/>
     	

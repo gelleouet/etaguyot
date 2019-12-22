@@ -111,7 +111,7 @@ function formatOption(data) {
 	}
 	
 	if (code) {
-		return $('<div class="row"><div class="col-10 font-weight-bold kt-font-small">' 
+		return $('<div class="row mr-1"><div class="col-9 font-weight-bold kt-font-small">' 
 				+ data.text 
 				+ '</div><div class="col text-right font-italic kt-font-small">'
 				+ code
@@ -151,8 +151,9 @@ function initComboBox() {
 		} 
 		
 		$this.select2({
+			dropdownAutoWidth: true,
 			openOnEnter: false,
-			allowClear: $this.attr('data-tags') == 'true',
+			allowClear: $this.attr('data-tags') == 'true' || $this.attr('data-clear') == 'true',
 			templateResult: formatOptionCallback,
 			templateSelection: formatSelectionCallback,
 			ajax: ajaxOptions,
@@ -257,9 +258,13 @@ function initDateRangePicker() {
 
 function initLocaleTypeNumber() {
 	$('input.number').on("blur", function() {
-		var $this = $(this)
-		$this.val($this.val().replace(/\./g, ','))
+		formatLocaleNumber($(this))
 	})
+}
+
+
+function formatLocaleNumber(element) {
+	element.val(element.val().replace(/\./g, ','))
 }
 
 
@@ -293,4 +298,33 @@ function ajaxSubmitForm(eltSrcId, formId, divDstId, onSuccess) {
 	});
 }
 
+function initFastFocusForm() {
+	$(document).on('keydown', 'form.fast-focus input,form.fast-focus select', function(event) {
+		if (event.which == 13) {
+			focusNextElement($(this))
+			return false
+		}
+		return true
+	});
+	
+	$(document).on('focus', 'form.fast-focus input,form.fast-focus select', function(e) {
+		$(this).select()
+	});
+}
+
+function focusNextElement(element) {
+	var form = element.parents('form:eq(0)'),
+		focusable, next;
+
+    focusable = form.find(':input').filter(':visible').filter(':enabled');
+    var index = focusable.index(element)
+    next = focusable.slice(index + 1).not('select.select2-offscreen').first();
+    if (next.length) {
+        next.focus();
+    }
+}
+
+function escapeSelectorName(name) {
+	return name.replace(/\./g, '\\.').replace(/\[/g, '\\[').replace(/\]/g, '\\]')
+}
 

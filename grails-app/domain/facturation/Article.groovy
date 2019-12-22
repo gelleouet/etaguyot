@@ -2,7 +2,9 @@ package facturation
 
 import grails.databinding.BindUsing
 import grails.validation.Validateable
+import groovy.transform.AutoClone
 
+@AutoClone
 class Article implements Validateable {
 
 	String code

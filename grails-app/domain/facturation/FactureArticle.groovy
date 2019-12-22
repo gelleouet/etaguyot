@@ -1,11 +1,13 @@
 package facturation
 
 import grails.validation.Validateable
+import groovy.transform.AutoClone
 
 /**
  * @author gelleouet <gregory.elleouet@gmail.com>
  *
  */
+@AutoClone
 class FactureArticle implements Validateable {
 	Facture facture
 	String codeArticle
@@ -15,6 +17,7 @@ class FactureArticle implements Validateable {
 	String unite
 	Double prixHT
 	Double tauxTVA
+	int ordre
 
 	// user properties
 	Integer status

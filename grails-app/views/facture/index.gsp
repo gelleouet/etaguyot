@@ -12,6 +12,11 @@
    			<input type="text" name="daterange" class="form-control app-daterangepicker" data-startDate="${ app.formatUser(date: command.dateDebut) }"
    				data-endDate="${ app.formatUser(date: command.dateFin) }" data-startDateId="dateDebut" data-endDateId="dateFin">
    			<g:textField name="numero" value="${ command.numero }" class="form-control ml-2 small" placeholder="N°"/>
+   			<g:select name="clientId" value="${ command.clientId }" from="${ command.clients() }" class="form-control app-combobox medium1"
+				optionKey="id" optionValue="raisonSociale" dataAttrs="['code': { it.code }]" data-placeholder="Sélectionner un client"
+				data-ajax--url="${ createLink(action: 'query', controller: 'client') }" data-ajax--global="false" data-clear="true">
+				<option></option>
+			</g:select>
    			<button class="btn btn-outline-brand"><i class="fa fa-search"></i></button>
    		</g:form>
    	</content>

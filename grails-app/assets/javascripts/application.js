@@ -65,6 +65,7 @@ jQuery(document).ready(function() {
 	// ne pas afficher de popup en cas d'erreurs mais log error
 	$.fn.dataTable.ext.errMode = 'throw';
 	initGlobal()
+	initFastFocusForm()
 	
 	var $body = $('body')
 	

@@ -30,7 +30,7 @@
    	</content>
     
     <body>
-    	<g:form action="save" name="article-edit-form" class="kt-form">
+    	<g:form action="save" name="article-edit-form" class="kt-form fast-focus">
     	
     		<g:hiddenField name="id" value="${ article?.id }"/>
     	

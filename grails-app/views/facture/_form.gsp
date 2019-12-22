@@ -17,7 +17,7 @@
 		<g:select name="client.id" value="${ facture?.client?.id }" from="${ clients }" class="form-control app-combobox"
 			optionKey="id" optionValue="raisonSociale" dataAttrs="['code': { it.code }]" data-placeholder="Sélectionner un client"
 			data-ajax--url="${ createLink(action: 'query', controller: 'client') }" data-ajax--global="false"
-			data-url="${ createLink(action: 'changeClient') }" data-onchange="onChangeClientFacture">
+			data-url="${ createLink(action: 'changeClient') }" data-onchange="onChangeClientFacture" autofocus="true">
 			<option></option>
 		</g:select>
 		<small class="text-muted">Recherche possible sur raison sociale ou code client</small>
@@ -102,6 +102,7 @@
 	<g:render template="formArticles"/>
 </div>
 
+<div class="kt-separator kt-separator--space-md kt-separator--border-dashed"></div>
 
 <div class="row">
 	<div class="col-2"></div>
@@ -110,7 +111,8 @@
 		<div class="form-group row">
 			<label class="col-4 col-form-label kt-font-bold kt-font-brand">Total HT (€)</label>
 			<div class="col-8">
-				<g:field type="text" name="totalHT" value="${ app.format2Decimal(number: facture?.totalHT) }" class="form-control number kt-font-bold kt-font-brand"/>
+				<g:field type="text" name="totalHT" value="${ app.format2Decimal(number: facture?.totalHT) }"
+					class="form-control number kt-font-bold kt-font-brand" readonly="true"/>
 			</div>
 		</div>
 	</div>
@@ -123,7 +125,8 @@
 		<div class="form-group row">
 			<label class="col-4 col-form-label kt-font-bold kt-font-brand">Total TVA (€)</label>
 			<div class="col-8">
-				<g:field type="text" name="totalTVA" value="${ app.format2Decimal(number: facture?.totalTVA) }" class="form-control number kt-font-bold kt-font-brand"/>
+				<g:field type="text" name="totalTVA" value="${ app.format2Decimal(number: facture?.totalTVA) }"
+					class="form-control number kt-font-bold kt-font-brand" readonly="true"/>
 			</div>
 		</div>
 	</div>
@@ -136,7 +139,8 @@
 		<div class="form-group row">
 			<label class="col-4 col-form-label kt-font-bold kt-font-brand">Total TTC (€)</label>
 			<div class="col-8">
-				<g:field type="text" name="totalTTC" value="${ app.format2Decimal(number: facture?.totalTTC()) }" class="form-control number kt-font-bold kt-font-brand"/>
+				<g:field type="text" name="totalTTC" value="${ app.format2Decimal(number: facture?.totalTTC()) }"
+					class="form-control number kt-font-bold kt-font-brand" readonly="true"/>
 			</div>
 		</div>
 	</div>

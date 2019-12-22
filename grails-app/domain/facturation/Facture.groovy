@@ -1,7 +1,9 @@
 package facturation
 
 import grails.validation.Validateable
+import groovy.transform.AutoClone
 
+@AutoClone
 class Facture implements Validateable {
 
 	static final String PREFIX_BROUILLON = "BRO"
@@ -27,7 +29,7 @@ class Facture implements Validateable {
 	Set<FactureArticle> articles = []
 
 
-	static hasMany = [tvas: FactureTva]
+	static hasMany = [tvas: FactureTva, articles: FactureArticle]
 
 	static constraints = {
 		numero unique: true
@@ -53,6 +55,12 @@ class Facture implements Validateable {
 
 	Facture clearNotPersistArticles() {
 		articles?.removeAll { it.status == null }
+		return this
+	}
+
+	Facture updateTotaux() {
+		totalHT = articles.sum { it.totalHT() } ?: 0d
+		totalTVA = articles.sum { it.totalTVA() } ?: 0d
 		return this
 	}
 }
