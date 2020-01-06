@@ -1,8 +1,19 @@
 package facturation
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
+
+import facturation.report.FactureReport
+import facturation.report.ReportService
+
+
 class FactureController extends AppController {
 
 	FactureService factureService
+
+	@Autowired
+	@Qualifier("gspfo")
+	ReportService reportService
 
 
 	def index(FactureCommand command) {
@@ -75,5 +86,9 @@ class FactureController extends AppController {
 	def removeArticle(Facture facture, int status) {
 		factureService.removeArticle(facture, status)
 		render template: 'form', model: completeModel([facture: facture])
+	}
+
+	def pdf(Facture facture) {
+		reportService.renderPdf(FactureReport, [facture: facture], response)
 	}
 }

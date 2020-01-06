@@ -40,6 +40,7 @@ dependencies {
 	compile "org.grails.plugins:spring-security-core:4.0.0.RC2"
 	// paquet pour les méthodes spéciales sur Date (ex : clearTime(), etc.)
 	compile "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
+	compile "org.apache.xmlgraphics:fop:2.3"
 	
 	// DEFAULT
 	// ------------------------------------------------------------------------
@@ -94,6 +95,14 @@ bootRun {
     sourceResources sourceSets.main
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
+	/**
+	 * !! Attention : spring.config.location
+	 * sous spring boot 1 => ajoute le chemin dans la conf par défaut
+	 * (et c'est ce que l'on veut)
+	 * sous spring boot 2 => remplace les chemins par défaut par les locations.
+	 * dans ce cas, il faut utiliser spring.config.additional-location
+	 */
+	//systemProperty "spring.config.additional-location", System.getProperty("spring.config.additional-location")
 }
 
 webdriverBinaries {

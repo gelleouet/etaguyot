@@ -61,6 +61,9 @@
 	    							<g:link action="edit" id="${ facture.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Modifier">
 			                          <i class="la la-edit"></i>
 			                        </g:link>
+			                        <g:link action="pdf" id="${ facture.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="PDF">
+							   			<i class="fa fa-file-pdf"></i>
+							   		</g:link>
 	    						</td>
 	    					</tr>
     					</g:each>

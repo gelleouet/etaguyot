@@ -5,7 +5,7 @@ class NumberTagLib {
 	static defaultEncodeAs = [taglib:'html']
 
 	// les tags renvoyant directement une valeur pouvant être utilisé comme fonction
-	static returnObjectForTags = ['format2Decimal']
+	static returnObjectForTags = ['format2Decimal', 'formatInt']
 
 
 	/**
@@ -15,6 +15,16 @@ class NumberTagLib {
 	 */
 	def format2Decimal = {attrs, body ->
 		g.formatNumber(number: attrs.number, format: "0.00")
+	}
+
+
+	/**
+	 * Formatte une date au format utilisateur
+	 * 
+	 * @attr number REQUIRED la date à formatter
+	 */
+	def formatInt = {attrs, body ->
+		g.formatNumber(number: attrs.number, format: "0")
 	}
 
 }

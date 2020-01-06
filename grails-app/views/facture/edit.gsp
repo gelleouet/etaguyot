@@ -20,6 +20,9 @@
     
     <content tag="subheaderToolbar">
     	<g:if test="${ facture?.id }">
+    		<g:link action="pdf" id="${ facture.id }" class="btn btn-default btn-sm btn-bold btn-upper">
+	   			<i class="fa fa-file-pdf"></i>PDF
+	   		</g:link>
 	   		<a href="#" class="btn btn-default btn-sm btn-bold btn-upper">
 	   			<i class="fa fa-copy"></i>Dupliquer
 	   		</a>
