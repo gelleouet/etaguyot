@@ -53,7 +53,7 @@ class FactureController extends AppController {
 	def save(Facture facture) {
 		checkErrors(this, facture)
 		factureService.saveWithArticles(facture)
-		redirect(action: 'index')
+		redirect(action: 'edit', id: facture.id)
 	}
 
 	@ExceptionHandler

@@ -52,6 +52,14 @@
 
     <!-- PIED-DE-PAGE -->
     <fo:static-content flow-name="xsl-region-after">
+    	<!-- 
+    	<fo:block-container absolute-position="absolute" bottom="0cm" right="0cm" width="9cm" height="9cm" z-index="-1000">
+    		<fo:block>
+    			<fo:external-graphic src="url('${report.baseURL}/assets/jd-s700-background.png')" content-width="9cm"/>
+    		</fo:block>    	
+    	</fo:block-container>
+    	 -->
+    	
     	<fo:block font-size="8pt" text-align="center" border-top="${ brandBorder }" padding-top="4pt">
             ETA GUYOT - KEROLLAIRE - 56440 LANGUIDIC - Tel : 06.87.63.20.82 - Email : eta.guyot@hotmail.com
         </fo:block>
