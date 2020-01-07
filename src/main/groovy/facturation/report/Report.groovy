@@ -3,10 +3,12 @@ package facturation.report
 import org.apache.commons.lang.StringUtils
 
 import facturation.AppException
+import grails.core.GrailsApplication
 
 abstract class Report {
 	String baseURL
 	Map parameters = [:]
+	GrailsApplication grailsApplication
 
 
 	/**

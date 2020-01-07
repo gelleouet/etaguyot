@@ -17,4 +17,13 @@ class FactureReport extends Report {
 	protected void modelImpl(Map model) throws AppException {
 		model.facture = parameters.facture
 	}
+
+	/** (non-Javadoc)
+	 *
+	 * @see facturation.report.Report#name()
+	 */
+	@Override
+	String name() {
+		"${grailsApplication.config.info.app.name}-${parameters.facture.numero}"
+	}
 }

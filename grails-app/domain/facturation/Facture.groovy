@@ -63,4 +63,45 @@ class Facture implements Validateable {
 		totalTVA = articles.sum { it.totalTVA() } ?: 0d
 		return this
 	}
+
+
+	Facture updateTvas() {
+		Map tvaGroup = articles.groupBy { it.tauxTVA }
+
+		// ajout ou update les nouveaux taux
+		tvaGroup.each { tauxTVA, farticles ->
+			FactureTva ftva = this.tvas.find { it.tauxTVA == tauxTVA }
+
+			if (!ftva) {
+				ftva = new FactureTva(tauxTVA: tauxTVA)
+				this.addToTvas(ftva)
+			}
+
+			ftva.totalHT = farticles.sum { it.totalHT() }
+			ftva.totalTVA = farticles.sum { it.totalTVA() }
+		}
+
+		// supprime les anciens taux
+		tvas.removeAll {  ftva ->
+			!tvaGroup.containsKey(ftva.tauxTVA)
+		}
+
+		return this
+	}
+
+	Facture checkArticles() {
+		articles.each { article ->
+			if (article.quantite == null) {
+				article.quantite = 0d
+			}
+			if (article.prixHT == null) {
+				article.prixHT = 0d
+			}
+			if (article.tauxTVA == null) {
+				article.tauxTVA = Constantes.TVA
+			}
+		}
+		return this
+	}
+
 }

@@ -38,6 +38,7 @@ abstract class AbstractReportService implements ReportService {
 		Report report = ClassUtils.newInstance(reportType)
 
 		// traitement commun avant le rendu
+		report.grailsApplication = grailsApplication
 		report.baseURL = grailsApplication.config.getProperty("etaguyot.server.localBaseURL")
 		report.parameters = parameters
 

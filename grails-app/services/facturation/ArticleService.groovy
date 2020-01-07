@@ -54,6 +54,12 @@ class ArticleService extends AppService<Article> {
 	@Transactional(readOnly = false, rollbackFor = AppException)
 	Article save(Article article) throws AppException {
 		article.code = article.code?.toUpperCase()
+		if (article.prixHT == null) {
+			article.prixHT = 0d
+		}
+		if (article.tauxTVA == null) {
+			article.tauxTVA = Constantes.TVA
+		}
 		return super.save(article)
 	}
 }

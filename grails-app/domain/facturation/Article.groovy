@@ -11,8 +11,8 @@ class Article implements Validateable {
 	String libelle
 	String commentaire
 	String unite
-	Double prixHT
-	Double tauxTVA = 20d
+	Double prixHT = 0d
+	Double tauxTVA = Constantes.TVA
 	String famille
 
 

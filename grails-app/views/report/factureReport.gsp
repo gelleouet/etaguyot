@@ -64,8 +64,8 @@
             <fo:table-column column-number="2" column-width="1.5cm"/>
             <fo:table-column column-number="3" column-width="2cm"/>
             <fo:table-column column-number="4" column-width="3cm"/>
-            <fo:table-column column-number="5" column-width="3cm"/>
-            <fo:table-column column-number="6" column-width="1.5cm"/>
+            <fo:table-column column-number="5" column-width="1.5cm"/>
+            <fo:table-column column-number="6" column-width="3cm"/>
             
             <fo:table-header>
             	<fo:table-row background-color="${ brandColor }" color="white" font-weight="bold"> 
@@ -91,12 +91,12 @@
                     </fo:table-cell>
                     <fo:table-cell padding="4pt">
                     	<fo:block text-align="center">
-                    		Montant HT
+                    		TVA
                     	</fo:block>
                     </fo:table-cell>
                     <fo:table-cell padding="4pt">
                     	<fo:block text-align="center">
-                    		TVA
+                    		Montant HT
                     	</fo:block>
                     </fo:table-cell>
             	</fo:table-row>
@@ -132,12 +132,12 @@
 	                    </fo:table-cell>
 	                    <fo:table-cell padding="8pt 4pt">
 	                    	<fo:block text-align="right">
-	                    		${ app.format2Decimal(number: farticle.totalHT()) }€
+	                    		${ app.format2Decimal(number: farticle.tauxTVA) }%
 	                    	</fo:block>
 	                    </fo:table-cell>
 	                    <fo:table-cell padding="8pt 4pt">
 	                    	<fo:block text-align="right">
-	                    		${ app.formatInt(number: farticle.tauxTVA) }%
+	                    		${ app.format2Decimal(number: farticle.totalHT()) }€
 	                    	</fo:block>
 	                    </fo:table-cell>
 	            	</fo:table-row>
@@ -218,6 +218,25 @@
             							</fo:block>
             						</fo:table-cell>
             					</fo:table-row>
+            					<g:each var="ftva" in="${ facture.tvas.sort { it.tauxTVA } }">
+	            					<fo:table-row font-size="8pt">
+	            						<fo:table-cell padding="2pt 4pt">
+	            							<fo:block>
+	            								${ app.format2Decimal(number: ftva.tauxTVA) }%
+	            							</fo:block>
+	            						</fo:table-cell>
+	            						<fo:table-cell padding="2pt 4pt">
+	            							<fo:block text-align="center">
+	            								${ app.format2Decimal(number: ftva.totalHT) }€
+	            							</fo:block>
+	            						</fo:table-cell>
+	            						<fo:table-cell padding="2pt 4pt">
+	            							<fo:block text-align="center">
+	            								${ app.format2Decimal(number: ftva.totalTVA) }€
+	            							</fo:block>
+	            						</fo:table-cell>
+	            					</fo:table-row>
+            					</g:each>
             				</fo:table-body>
             			</fo:table>
             			

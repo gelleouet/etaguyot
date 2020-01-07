@@ -125,6 +125,7 @@ class FactureService extends AppService<Article> {
 	}
 
 	Facture changeTarification(Facture facture, int status) {
+		facture.checkArticles()
 		facture.updateTotaux()
 		return facture
 	}
@@ -132,6 +133,9 @@ class FactureService extends AppService<Article> {
 	@Transactional(readOnly = false, rollbackFor = AppException)
 	Facture saveWithArticles(Facture facture) throws AppException {
 		facture.clearNotPersistArticles()
+		facture.checkArticles()
+		facture.updateTotaux()
+		facture.updateTvas()
 		return super.save(facture)
 	}
 }
