@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
 	<wb-module deploy-name="etaguyot">
 		<property name="context-root" value="etaguyot"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
@@ -13,6 +14,5 @@
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="grails-app/utils"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/groovy"/>
 		<wb-resource deploy-path="/" source-path="src/main/webapp"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
 	</wb-module>
 </project-modules>

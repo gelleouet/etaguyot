@@ -6,17 +6,16 @@
     
     <content tag="subheaderTitle">
    		<g:form class="form-inline" name="article-index-form">
-   			<label>Rechercher</label>
-   			<g:textField name="code" value="${ command.code }" class="form-control ml-2 small" placeholder="Code" autofocus="true"/>
-   			<g:textField name="libelle" value="${ command.libelle }" class="form-control ml-2 medium" placeholder="Libellé"/>
-   			<g:textField name="famille" value="${ command.famille }" class="form-control ml-2 medium" placeholder="Famille"/>
+   			<g:field type="search" name="code" value="${ command.code }" class="form-control ml-2 small" placeholder="Code" autofocus="true"/>
+   			<g:field type="search" name="libelle" value="${ command.libelle }" class="form-control ml-2 medium" placeholder="Libellé"/>
+   			<g:field type="search" name="famille" value="${ command.famille }" class="form-control ml-2 medium" placeholder="Famille"/>
    			<button class="btn btn-outline-brand"><i class="fa fa-search"></i></button>
    		</g:form>
    	</content>
    	
    	<content tag="subheaderToolbar">
-   		<g:link action="edit" class="btn btn-default btn-sm btn-bold btn-upper">
-   			<i class="fa fa-plus"></i>Nouveau
+   		<g:link action="edit" class="btn btn-default btn-sm" title="Nouveau">
+   			<i class="fa fa-plus"></i>
    		</g:link>
    	</content>
     

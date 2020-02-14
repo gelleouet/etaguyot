@@ -2,12 +2,14 @@ package facturation
 
 import org.springframework.validation.Errors
 
+import grails.validation.Validateable
+
 /**
  * @author gelleouet <gregory.elleouet@gmail.com>
  *
  */
 class AppException extends Exception {
-	Object command
+	Validateable command
 	Errors errors
 
 
@@ -24,7 +26,7 @@ class AppException extends Exception {
 	 * @param message
 	 * @param command
 	 */
-	AppException(Object command) {
+	AppException(Validateable command) {
 		this("Erreur formulaire ${command.class.simpleName}")
 		this.command = command
 		this.errors = this.command.errors
@@ -32,11 +34,23 @@ class AppException extends Exception {
 
 
 	/**
+	 *
+	 * @param cause
+	 * @param command
+	 */
+	AppException(String message, Validateable command) {
+		this(message)
+		this.command = command
+		this.errors = this.command.errors
+	}
+	
+	
+	/**
 	 * 
 	 * @param cause
 	 * @param command
 	 */
-	AppException(Throwable cause, Object command) {
+	AppException(Throwable cause, Validateable command) {
 		this(cause)
 		this.command = command
 		this.errors = this.command.errors

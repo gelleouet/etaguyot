@@ -10,7 +10,8 @@ class ArticleController extends AppController {
 	}
 
 	def index(ArticleCommand command) {
-		def articles = articleService.search(command, pagination())
+		command = getViewSearchAttribute(command)
+		def articles = articleService.search(command, command.pagination())
 		def familles = articleService.groupFamille()
 		render view: 'index', model: [command: command, articles: articles,
 			familles: familles]

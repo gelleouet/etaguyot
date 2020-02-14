@@ -1,13 +1,11 @@
 package facturation
 
-import grails.databinding.BindUsing
-import grails.validation.Validateable
 
 /**
  * @author gelleouet <gregory.elleouet@gmail.com>
  *
  */
-class FactureCommand implements Validateable {
+class FactureCommand extends AbstractCommand {
 	String numero
 	Date dateDebut
 	Date dateFin

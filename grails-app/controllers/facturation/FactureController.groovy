@@ -17,8 +17,11 @@ class FactureController extends AppController {
 
 
 	def index(FactureCommand command) {
-		def factures = factureService.search(command, pagination())
-		render view: 'index', model: [command: command, factures: factures]
+		command = getViewSearchAttribute(command)
+		def factures = factureService.search(command, command.pagination())
+		def synthese = factureService.synthese(command)
+		
+		render view: 'index', model: [command: command, factures: factures, synthese: synthese]
 	}
 
 	def globalSearch(String value) {
@@ -55,12 +58,24 @@ class FactureController extends AppController {
 		factureService.saveWithArticles(facture)
 		redirect(action: 'edit', id: facture.id)
 	}
+	
+	@ExceptionHandler(action = "edit")
+	def valider(Facture facture) {
+		checkErrors(this, facture)
+		factureService.valider(facture)
+		redirect(action: 'edit', id: facture.id)
+	}
 
 	@ExceptionHandler
 	def delete(Facture facture) {
 		checkErrors(this, facture)
 		factureService.delete(facture)
 		redirect(action: 'index')
+	}
+	
+	def avoir(Facture facture) {
+		Facture avoir = factureService.avoir(facture)
+		edit(avoir)
 	}
 
 	def changeClient(Facture facture) {

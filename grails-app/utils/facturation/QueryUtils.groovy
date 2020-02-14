@@ -1,5 +1,6 @@
 package facturation
 
+import org.hibernate.Query
 
 class QueryUtils {
 
@@ -49,5 +50,27 @@ class QueryUtils {
 	 */
 	static String decorateMatchAll(String value) {
 		decoratePatternRight(decoratePatternLeft(value, MATH_ALL_PATTERN), MATH_ALL_PATTERN)
+	}
+	
+	
+	/**
+	 * Binding des paramètres de la query
+	 *
+	 * @param query
+	 * @param parameters
+	 * @return
+	 */
+	static Query bindParameters(Query query, Map parameters) {
+		if (parameters) {
+			parameters.each { key, value ->
+				if (value instanceof Collection) {
+					query.setParameterList(key, (Collection) value)
+				} else {
+					query.setParameter(key, value)
+				}
+			}
+		}
+
+		return query
 	}
 }

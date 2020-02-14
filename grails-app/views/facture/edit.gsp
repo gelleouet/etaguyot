@@ -12,7 +12,7 @@
 	   		</g:link>
 	   		<span class="kt-subheader__breadcrumbs-separator"></span>
 	   		<g:link action="edit" id="${ facture?.id }" class="kt-subheader__breadcrumbs-link">
-	   			${ facture?.id ? facture.numero : 'Nouvelle facture' }
+	   			${ facture?.titreComplet() }
 	   		</g:link>
     	</div>
    	</content>
@@ -20,15 +20,27 @@
     
     <content tag="subheaderToolbar">
     	<g:if test="${ facture?.id }">
-    		<g:link action="pdf" id="${ facture.id }" class="btn btn-default btn-sm btn-bold btn-upper">
-	   			<i class="fa fa-file-pdf"></i>PDF
+    		<g:if test="${ facture.isBrouillon() }">
+				<button class="btn btn-success" onclick="onValiderFacture(this)" data-url="${ g.createLink(action: 'valider') }">
+					<i class="la la-check-circle"></i> Valider
+				</button>
+			</g:if>
+			<g:elseif test="${ !facture.isAvoir() }">
+				<g:link action="avoir" id="${ facture.id }" class="btn btn-secondary btn-sm" title="Avoir">
+		   			<i class="fa fa-file-invoice-dollar"></i> Avoir
+		   		</g:link>
+			</g:elseif>
+    		<g:link action="pdf" id="${ facture.id }" class="btn btn-secondary btn-sm" title="PDF">
+	   			<i class="fa fa-file-pdf"></i>
 	   		</g:link>
-	   		<a href="#" class="btn btn-default btn-sm btn-bold btn-upper">
-	   			<i class="fa fa-copy"></i>Dupliquer
+	   		<a href="#" class="btn btn-secondary btn-sm" title="Dupliquer">
+	   			<i class="fa fa-copy"></i>
 	   		</a>
-	   		<g:link action="delete" id="${ facture.id }" class="btn btn-outline-danger btn-sm btn-bold btn-upper confirm-button">
-	   			<i class="la la-trash"></i>Supprimer
-	   		</g:link>
+	   		<g:if test="${ !facture.isValidee() }">
+		   		<g:link action="delete" id="${ facture.id }" class="btn btn-outline-danger btn-sm confirm-button" title="Supprimer">
+		   			<i class="la la-trash"></i>
+		   		</g:link>
+	   		</g:if>
    		</g:if>
    	</content>
     
@@ -38,13 +50,15 @@
     		<g:hiddenField name="id" value="${ facture?.id }"/>
     	
 	    	<g:applyLayout name="portlet" params="['footerSolid': true]">
-	    		<content tag="portletTitle"><i class="fa fa-shopping-cart"></i>&nbsp;${ facture?.id ? facture.numero : 'Nouvelle facture' }</content>
+	    		<content tag="portletTitle"><i class="fa fa-shopping-cart"></i>&nbsp;${ facture?.titreComplet() }</content>
 	    		
 	    		<content tag="portletToolbar">
 	    			<g:link class="btn btn-secondary kt-margin-r-10">
 	    				<i class="la la-arrow-left"></i> Retour
 	    			</g:link>
-	    			<button class="btn btn-brand"><i class="la la-check"></i> Enregistrer</button>
+	    			<g:if test="${ !facture.isValidee() }">
+	    				<button id="facture-edit-form-submit" class="btn btn-brand"><i class="la la-save"></i> Enregistrer</button>
+	    			</g:if>
 	    		</content>
 	    		
 	    		<content tag="portletBody">
@@ -69,7 +83,9 @@
  						<g:link class="btn btn-secondary kt-margin-r-10">
 		    				<i class="la la-arrow-left"></i> Retour
 		    			</g:link>
-		    			<button class="btn btn-brand"><i class="la la-check"></i> Enregistrer</button>
+		    			<g:if test="${ !facture.isValidee() }">
+		    				<button class="btn btn-brand"><i class="la la-save"></i> Enregistrer</button>
+		    			</g:if>
 	    			</div>
 	    		</content>
 	    	</g:applyLayout>

@@ -20,11 +20,11 @@
     
     <content tag="subheaderToolbar">
     	<g:if test="${ article?.id }">
-	   		<a href="#" class="btn btn-default btn-sm btn-bold btn-upper">
-	   			<i class="fa fa-copy"></i>Dupliquer
+	   		<a href="#" class="btn btn-secondary btn-sm" title="Dupliquer">
+	   			<i class="fa fa-copy"></i>
 	   		</a>
-	   		<g:link action="delete" id="${ article.id }" class="btn btn-outline-danger btn-sm btn-bold btn-upper confirm-button">
-	   			<i class="la la-trash"></i>Supprimer
+	   		<g:link action="delete" id="${ article.id }" class="btn btn-outline-danger btn-sm confirm-button" title="Supprimer">
+	   			<i class="la la-trash"></i>
 	   		</g:link>
    		</g:if>
    	</content>
@@ -41,7 +41,7 @@
 	    			<g:link class="btn btn-secondary kt-margin-r-10">
 	    				<i class="la la-arrow-left"></i> Retour
 	    			</g:link>
-	    			<button class="btn btn-brand"><i class="la la-check"></i> Enregistrer</button>
+	    			<button class="btn btn-brand"><i class="la la-save"></i> Enregistrer</button>
 	    		</content>
 	    		
 	    		<content tag="portletBody">
@@ -66,7 +66,7 @@
  						<g:link class="btn btn-secondary kt-margin-r-10">
 		    				<i class="la la-arrow-left"></i> Retour
 		    			</g:link>
-		    			<button class="btn btn-brand"><i class="la la-check"></i> Enregistrer</button>
+		    			<button class="btn btn-brand"><i class="la la-save"></i> Enregistrer</button>
 	    			</div>
 	    		</content>
 	    	</g:applyLayout>

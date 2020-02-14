@@ -14,7 +14,8 @@ class ClientController extends AppController {
 	}
 
 	def index(ClientCommand command) {
-		def clients = clientService.search(command, pagination())
+		command = getViewSearchAttribute(command)
+		def clients = clientService.search(command, command.pagination())
 		def familles = clientService.groupFamille()
 		render view: 'index', model: [command: command, clients: clients,
 			familles: familles]

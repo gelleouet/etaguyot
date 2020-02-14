@@ -1,37 +1,20 @@
 <%@ page contentType="application/xml" %>
 <%@ page defaultCodec="xml" %>
 
+
 <g:set var="labelColor" value="#414b4c"></g:set>
-<g:set var="lightgreyColor" value="#efeff5"></g:set>
+<g:set var="secondaryColor" value="#e1e1ef"></g:set>
+<g:set var="grayColor" value="#6c757d"></g:set>
+<g:set var="grayDarkColor" value="#343a40"></g:set>
 <g:set var="brandColor" value="#008a2e"></g:set>
-<g:set var="brandBorder" value="1px solid ${ brandColor }"></g:set>
-<g:set var="brandBorderDashed" value="1px dashed ${ brandColor }"></g:set>
-<g:set var="defaultBorder" value="1px solid lightgrey"></g:set>
 
 
 <g:applyLayout name="report/page-paysage">
 
-	<content tag="contentHeader">
-		<fo:block font-size="20pt" font-weight="bold" color="${ brandColor }">
-           FACTURE
-    	</fo:block>
-		<fo:block font-size="12pt" font-weight="bold" space-before="4pt">
-          N° : ${ facture.numero }
-    	</fo:block>
-		<fo:block font-size="12pt" space-before="4pt">
-          Date : ${ app.formatUser(date: facture.dateFacture) }
-    	</fo:block>
-		<fo:block font-size="12pt" space-before="4pt">
-          N° client : ${ facture.client.code }
-    	</fo:block>
-	</content>
-	
-
     <content tag="body">
     
-    	<fo:block-container absolute-position="absolute" top="-0.5cm" left="8cm" width="10cm" height="3cm" border="${ brandBorder }"
-    		fox:border-radius="4pt" padding="12pt">
-    		<fo:block font-size="12pt" font-weight="bold" color="${ brandColor }" padding-before="10pt" text-transform="uppercase">
+    	<fo:block-container absolute-position="absolute" top="-0.5cm" left="8cm" width="10cm" height="3cm" padding="12pt">
+    		<fo:block font-size="12pt" font-weight="bold" padding-before="10pt" text-transform="uppercase">
            		${ facture.client.raisonSociale }
     		</fo:block>
     		<fo:block font-size="12pt" space-before="4pt">
@@ -43,7 +26,11 @@
     	</fo:block-container>
     	
     
-        <fo:block font-size="12pt" space-before="4cm">
+        <fo:block font-size="14pt" font-weight="bold" space-before="4cm">
+        	${ facture.titre() } N° ${ facture.numero } du ${ app.formatUser(date: facture.dateFacture) }
+        </fo:block>
+        <fo:block font-size="12pt" font-weight="bold" space-before="4pt">
+        	Référence client : ${ facture.client.code }
         </fo:block>
         
         <g:if test="${ facture.reference }">
@@ -58,7 +45,7 @@
         </g:if>
         
         
-        <fo:block-container border-bottom="${ brandBorder }" space-before="8pt">
+        <fo:block-container border-bottom="1px solid ${ grayDarkColor }" space-before="8pt">
         <fo:table table-layout="fixed" width="100%" font-size="10pt">
             <fo:table-column column-number="1" column-width="8cm"/>
             <fo:table-column column-number="2" column-width="1.5cm"/>
@@ -68,7 +55,7 @@
             <fo:table-column column-number="6" column-width="3cm"/>
             
             <fo:table-header>
-            	<fo:table-row background-color="${ brandColor }" color="white" font-weight="bold"> 
+            	<fo:table-row background-color="${ grayColor }" color="white" font-weight="bold"> 
                     <fo:table-cell padding="4pt">
                     	<fo:block text-align="left">
                     		Article
@@ -195,7 +182,7 @@
             				<fo:table-column column-number="3" column-width="4cm"/>
             				<fo:table-body>
             					<fo:table-row>
-            						<fo:table-cell padding="4pt 4pt" background-color="${ brandColor }" number-columns-spanned="3">
+            						<fo:table-cell padding="4pt 4pt" background-color="${ grayColor }" number-columns-spanned="3">
             							<fo:block font-weight="bold" color="white">
             								Détail de la TVA
             							</fo:block>
@@ -245,7 +232,7 @@
             				<fo:table-column column-number="2" column-width="60%"/>
             				<fo:table-body>
             					<fo:table-row>
-            						<fo:table-cell padding="4pt 4pt" background-color="${ brandColor }">
+            						<fo:table-cell padding="4pt 4pt" background-color="${ grayColor }">
             							<fo:block  font-weight="bold" color="white">
             								Règlement
             							</fo:block>
@@ -257,7 +244,7 @@
             						</fo:table-cell>
             					</fo:table-row>
             					<fo:table-row>
-            						<fo:table-cell padding="4pt 4pt" background-color="${ brandColor }">
+            						<fo:table-cell padding="4pt 4pt" background-color="${ grayColor }">
             							<fo:block  font-weight="bold" color="white">
             								Echéance
             							</fo:block>
@@ -276,7 +263,7 @@
             				<fo:table-column column-number="2" column-width="7.5cm"/>
             				<fo:table-body>
             					<fo:table-row>
-            						<fo:table-cell padding="4pt 4pt" background-color="${ brandColor }" number-columns-spanned="2">
+            						<fo:table-cell padding="4pt 4pt" background-color="${ grayColor }" number-columns-spanned="2">
             							<fo:block  font-weight="bold" color="white">
             								Coordonnées bancaires
             							</fo:block>
@@ -295,24 +282,24 @@
             						</fo:table-cell>
             					</fo:table-row>
             					<fo:table-row font-size="8pt">
-            						<fo:table-cell padding="4pt 4pt">
+            						<fo:table-cell padding="2pt 4pt">
             							<fo:block font-weight="bold">
             								IBAN
             							</fo:block>
             						</fo:table-cell>
-            						<fo:table-cell padding="4pt 4pt">
+            						<fo:table-cell padding="2pt 4pt">
             							<fo:block>
             								
             							</fo:block>
             						</fo:table-cell>
             					</fo:table-row>
             					<fo:table-row font-size="8pt">
-            						<fo:table-cell padding="4pt 4pt">
+            						<fo:table-cell padding="2pt 4pt">
             							<fo:block font-weight="bold">
             								BIC
             							</fo:block>
             						</fo:table-cell>
-            						<fo:table-cell padding="4pt 4pt">
+            						<fo:table-cell padding="2pt 4pt">
             							<fo:block>
             								
             							</fo:block>
@@ -332,12 +319,12 @@
             				<fo:table-column column-number="2" column-width="60%"/>
             				<fo:table-body>
             					<fo:table-row>
-            						<fo:table-cell padding="4pt 4pt" background-color="${ lightgreyColor }">
+            						<fo:table-cell padding="4pt 4pt">
             							<fo:block >
             								Total HT
             							</fo:block>
             						</fo:table-cell>
-            						<fo:table-cell padding="4pt 4pt" background-color="${ lightgreyColor }">
+            						<fo:table-cell padding="4pt 4pt">
             							<fo:block text-align="right">
             								${ app.format2Decimal(number: facture.totalHT) }€
             							</fo:block>
@@ -355,14 +342,14 @@
             							</fo:block>
             						</fo:table-cell>
             					</fo:table-row>
-            					<fo:table-row>
+            					<fo:table-row background-color="${ secondaryColor }">
             						<fo:table-cell padding="4pt 4pt">
-            							<fo:block font-weight="bold" color="${ brandColor }">
+            							<fo:block font-weight="bold" color="${ grayDarkColor }">
             								Total TTC
             							</fo:block>
             						</fo:table-cell>
             						<fo:table-cell padding="4pt 4pt">
-            							<fo:block font-weight="bold" color="${ brandColor }" text-align="right">
+            							<fo:block font-weight="bold" color="${ grayDarkColor }" text-align="right">
             								${ app.format2Decimal(number: facture.totalTTC()) }€
             							</fo:block>
             						</fo:table-cell>

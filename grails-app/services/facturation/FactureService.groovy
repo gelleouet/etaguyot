@@ -5,7 +5,7 @@ import grails.gorm.transactions.Transactional
 class FactureService extends AppService<Article> {
 
 	List<Facture> search(FactureCommand command, Map pagination) {
-		log.info "Search from ${command.dateDebut.format('dd/MM/yyyy')} to ${command.dateFin.format('dd/MM/yyyy')}"
+		log.info "Recherche entre ${command.dateDebut.format('dd/MM/yyyy')} et ${command.dateFin.format('dd/MM/yyyy')}"
 
 		return Facture.createCriteria().list(pagination) {
 			if (command.numero) {
@@ -19,9 +19,63 @@ class FactureService extends AppService<Article> {
 					idEq command.clientId
 				}
 			}
+			
+			if (command.types) {
+				'in' 'type', command.types
+			}
+			
+			if (command.statuts) {
+				'in' 'statut', command.statuts
+			}
 
 			order 'numero', 'desc'
 		}
+	}
+	
+	
+	Map synthese(FactureCommand command) {
+		log.info "Synthese entre ${command.dateDebut.format('dd/MM/yyyy')} et ${command.dateFin.format('dd/MM/yyyy')}"
+		Map synthese = [:]
+		
+		def result = Facture.createCriteria().get() {
+			if (command.numero) {
+				ilike 'numero', QueryUtils.decorateMatchAll(command.numero)
+			} else {
+				between 'dateFacture', command.dateDebut, command.dateFin
+			}
+
+			client {
+				if (command.clientId) {
+					idEq command.clientId
+				}
+			}
+			
+			if (command.types) {
+				'in' 'type', command.types
+			}
+			
+			if (command.statuts) {
+				'in' 'statut', command.statuts
+			}
+
+			projections {
+				count "id", "count"
+				sum "totalHT", "totalHT"
+				sum "totalTVA", "totalTVA"
+				sum "totalRegle", "totalRegle"
+			}
+		}
+		
+		if (result) {
+			synthese.count = result[0] ?: 0
+			synthese.totalHT = result[1] ?: 0
+			synthese.totalTVA = result[2] ?: 0
+			synthese.totalRegle = result[3] ?: 0
+			synthese.totalTTC = synthese.totalHT + synthese.totalTVA
+			synthese.totalResteDu = synthese.totalTTC - synthese.totalRegle
+		}
+		
+		return synthese
 	}
 
 
@@ -37,16 +91,22 @@ class FactureService extends AppService<Article> {
 	}
 
 
-	String newNumeroFacture(Date date) {
-		def row = Article.executeQuery("SELECT max(code) from Article")
-		String newCode = "0001"
+	String newNumeroFacture(Facture facture) {
+		def row = Facture.executeQuery("""
+			SELECT count(f) 
+			from Facture f 
+			where f.dateFacture between :dateDebut and :dateFin 
+			and f.statut > 0 and type = :type""",
+				[dateDebut: DateUtils.firstDayInMonth(facture.dateFacture),
+					dateFin: DateUtils.lastDayInMonth(facture.dateFacture),
+					type: facture.type])
+		long count = 0
 
 		if (row && row[0]) {
-			def valCode = row[0].toInteger()
-			newCode = String.format("%04d", valCode + 1)
+			count = row[0]
 		}
 
-		return newCode
+		return String.format("${facture.prefix()}%s%03d", facture.dateFacture.format("yyyyMM"), count + 1)
 	}
 
 
@@ -137,5 +197,34 @@ class FactureService extends AppService<Article> {
 		facture.updateTotaux()
 		facture.updateTvas()
 		return super.save(facture)
+	}
+	
+	@Transactional(readOnly = false, rollbackFor = AppException)
+	Facture valider(Facture facture) throws AppException {
+		saveWithArticles(facture)
+		facture.valider()
+		// vrai numéro de facture
+		facture.numero = newNumeroFacture(facture)
+		return super.save(facture)
+	}
+	
+	Facture avoir(Facture facture) throws AppException {
+		Facture avoir = createNewFacture(TypeFactureEnum.avoir)
+		
+		// recopie les infos de la facture source
+		avoir.client = facture.client
+		avoir.modeReglement = facture.modeReglement
+		avoir.reference = "Avoir sur la facture n° ${ facture.numero }"
+		
+		facture.articles.each { article ->
+			avoir.articles << new FactureArticle(codeArticle: article.codeArticle, libelle: article.libelle,
+				quantite: article.quantite, unite: article.unite, prixHT: article.prixHT,
+				tauxTVA: article.tauxTVA, ordre: article.ordre)
+		}
+		
+		avoir.checkArticles()
+		avoir.updateTotaux()
+		
+		return avoir
 	}
 }

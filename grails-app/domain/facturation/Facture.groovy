@@ -21,6 +21,7 @@ class Facture implements Validateable {
 	String commentaire
 	Double totalHT
 	Double totalTVA
+	Double totalRegle
 	// OU logique des différents status (afin d'avoir plusieurs flags en même temps)
 	int statut
 	TypeFactureEnum type = TypeFactureEnum.facture
@@ -50,6 +51,10 @@ class Facture implements Validateable {
 
 	Double totalTTC() {
 		totalHT + totalTVA
+	}
+	
+	Double resteDu() {
+		totalTTC() - totalRegle
 	}
 
 
@@ -100,8 +105,74 @@ class Facture implements Validateable {
 			if (article.tauxTVA == null) {
 				article.tauxTVA = Constantes.TVA
 			}
+			if (article.prixHT > 0 && isAvoir()) {
+				article.prixHT = article.prixHT * -1.0
+			}
 		}
 		return this
 	}
+	
+	boolean isAvoir() {
+		type == TypeFactureEnum.avoir
+	}
+	
+	boolean isFacture() {
+		type == TypeFactureEnum.facture
+	}
+	
+	boolean isBrouillon() {
+		statut == StatutFactureEnum.brouillon.id
+	}
+	
+	boolean isValidee() {
+		statut == StatutFactureEnum.validee.id
+	}
+	
+	boolean isEnvoyee() {
+		statut == StatutFactureEnum.envoyee.id
+	}
+	
+	boolean isReglee() {
+		statut == StatutFactureEnum.reglee.id
+	}
+	
+	boolean isAnnulee() {
+		statut == StatutFactureEnum.annulee.id
+	}
 
+	String titre() {
+		type.toString().toUpperCase()
+	}
+	
+	String titreComplet() {
+		if (id) {
+			type.toString().toUpperCase() + ' ' + numero
+		} else if (isAvoir()) {
+			return "Nouvel avoir"
+		} else {
+			return "Nouvelle facture"
+		}
+	}
+	
+	Facture valider() throws AppException {
+		if (isValidee()) {
+			throw new AppException("La facture est déjà validée !", this)
+		}
+		
+		if (!articles) {
+			throw new AppException("Veuillez insérer au moins un article !", this)
+		}
+		
+		if (!totalHT) {
+			throw new AppException("Le total HT est égal à 0 !", this)
+		}
+		
+		statut = StatutFactureEnum.validee.id
+		
+		return this
+	}
+
+	String prefix() {
+		isAvoir() ? PREFIX_AVOIR : PREFIX_FACTURE
+	}	
 }

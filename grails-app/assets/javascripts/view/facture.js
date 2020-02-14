@@ -55,3 +55,24 @@ function processFactureCodeProduitResults(data) {
 	
 	return data
 }
+
+
+function onValiderFacture(element) {
+	var $element = $(element)
+	
+	swal.fire({
+        title: "La validation d'une facture est définitive",
+        text: "Voulez-vous valider cette facture ?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui',
+        cancelButtonText: 'Non',
+        confirmButtonClass: "btn btn-success",
+        cancelButtonClass: "btn btn-secondary"
+    }).then(function(result){
+        if (result.value) {
+        	$('#facture-edit-form').attr("action", $element.attr("data-url"))
+        	$('#facture-edit-form-submit').click()
+        }
+    });
+}

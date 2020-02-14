@@ -1,13 +1,15 @@
 <g:hiddenField name="numeroBrouillon" value="${ facture?.numeroBrouillon }"/>
+<g:hiddenField name="type" value="${ facture?.type }"/>
 
 
 <div class="form-group row required ">
 	<label class="col-2 col-form-label">Numéro</label>
 	<div class="col-5">
-		<g:textField name="numero" value="${ facture?.numero }" class="form-control medium" required="true" maxlength="16" readonly="readonly"/>
+		<g:textField name="numero" value="${ facture?.numero }" class="form-control medium" required="true"
+			maxlength="16" readonly="readonly"/>
 	</div>
 	<div class="col-5">
-		<span class="badge badge-secondary">BROUILLON</span>
+		<g:render template="singleStatut" model="[facture: facture]"/>
 	</div>
 </div>
 
@@ -17,7 +19,8 @@
 		<g:select name="client.id" value="${ facture?.client?.id }" from="${ clients }" class="form-control app-combobox"
 			optionKey="id" optionValue="raisonSociale" dataAttrs="['code': { it.code }]" data-placeholder="Sélectionner un client"
 			data-ajax--url="${ createLink(action: 'query', controller: 'client') }" data-ajax--global="false"
-			data-url="${ createLink(action: 'changeClient') }" data-onchange="onChangeClientFacture" autofocus="true">
+			data-url="${ createLink(action: 'changeClient') }" data-onchange="onChangeClientFacture" autofocus="true"
+			disabled="${ facture.isValidee() }">
 			<option></option>
 		</g:select>
 		<small class="text-muted">Recherche possible sur raison sociale ou code client</small>
@@ -55,7 +58,7 @@
 	<label class="col-2 col-form-label">Mode règlement</label>
 	<div class="col-5">
 		<g:select name="modeReglement.id" value="${ facture?.modeReglement?.id }" from="${ modeReglements }" class="form-control"
-			optionKey="id" optionValue="libelle"/>
+			optionKey="id" optionValue="libelle" disabled="${ facture.isValidee() }"/>
 	</div>
 </div>
 
@@ -63,7 +66,7 @@
 	<label class="col-2 col-form-label">Date</label>
 	<div class="col-5">
 		<g:field type="date" name="dateFacture" value="${ app.formatPicker(date: facture?.dateFacture) }" 
-			class="form-control medium" required="true"/>
+			class="form-control medium" required="true" disabled="${ facture.isValidee() }"/>
 	</div>
 </div>
 
@@ -71,7 +74,7 @@
 	<label class="col-2 col-form-label">Date d'échéance</label>
 	<div class="col-5">
 		<g:field type="date" name="dateEcheance" value="${ app.formatPicker(date: facture?.dateEcheance) }" 
-			class="form-control medium" required="true"/>
+			class="form-control medium" required="true" disabled="${ facture.isValidee() }"/>
 	</div>
 </div>
 
@@ -79,7 +82,7 @@
 	<label class="col-2 col-form-label">Référence</label>
 	<div class="col-10">
 		<g:textField name="reference" value="${ facture?.reference }" class="form-control" maxlength="255"
-			placeholder="Saisir une référence"/>
+			placeholder="Saisir une référence" disabled="${ facture.isValidee() }"/>
 	</div>
 </div>
 
@@ -87,16 +90,18 @@
 	<label class="col-2 col-form-label">Commentaire</label>
 	<div class="col-10">
 		<g:textArea name="commentaire" value="${ facture?.commentaire }" class="form-control" rows="2"
-			placeholder="Saisir un commentaire"/>
+			placeholder="Saisir un commentaire" disabled="${ facture.isValidee() }"/>
 	</div>
 </div>
 
 
-<div>
-	<a id="facture-add-article-button" class="btn btn-secondary btn" data-url="${ createLink(action: 'addArticle') }">
-		<i class="fa fa-plus"></i>&nbsp;Article
-	</a>
-</div>
+<g:if test="${ !facture.isValidee() }">
+	<div>
+		<a id="facture-add-article-button" class="btn btn-secondary btn" data-url="${ createLink(action: 'addArticle') }">
+			<i class="fa fa-plus"></i>&nbsp;Article
+		</a>
+	</div>
+</g:if>
 
 <div id="facture-article-ajax-form">
 	<g:render template="formArticles"/>
