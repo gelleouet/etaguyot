@@ -66,6 +66,9 @@ class Facture implements Validateable {
 	Facture updateTotaux() {
 		totalHT = articles.sum { it.totalHT() } ?: 0d
 		totalTVA = articles.sum { it.totalTVA() } ?: 0d
+		if (totalRegle == null) {
+			totalRegle= 0d
+		}
 		return this
 	}
 

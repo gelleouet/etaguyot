@@ -87,6 +87,7 @@ class FactureService extends AppService<Article> {
 		facture.numero = facture.numeroBrouillon
 		facture.totalHT = 0d
 		facture.totalTVA = 0d
+		facture.totalRegle = 0d
 		return facture
 	}
 

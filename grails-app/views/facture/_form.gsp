@@ -1,5 +1,6 @@
 <g:hiddenField name="numeroBrouillon" value="${ facture?.numeroBrouillon }"/>
 <g:hiddenField name="type" value="${ facture?.type }"/>
+<g:hiddenField name="totalRegle" value="${ app.format2Decimal(number: facture?.totalRegle) }"/>
 
 
 <div class="form-group row required ">
