@@ -12,7 +12,7 @@ enum StatutFactureEnum {
 	brouillon(0),
 	validee(1),
 	envoyee(2),
-	reglee(4),
+	reglee(4)
 
 	int id
 

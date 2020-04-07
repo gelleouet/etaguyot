@@ -25,13 +25,7 @@ class FactureController extends AppController {
 	}
 
 	def globalSearch(String value) {
-		def command
-		if (value.isInteger()) {
-			command = new FactureCommand(code: value)
-		} else {
-			command = new FactureCommand(libelle: value)
-		}
-
+		def command = new FactureCommand(numero: value)
 		def factures = factureService.search(command, [max: 1])
 
 		if (factures.totalCount == 1) {
