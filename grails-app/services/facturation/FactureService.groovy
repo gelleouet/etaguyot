@@ -149,6 +149,7 @@ class FactureService extends AppService<Article> {
 			article.ordre = facture.articles.max {
 				it.ordre
 			}.ordre + 1
+			article.status = article.ordre
 		}
 
 		facture.addToArticles(article)
@@ -186,23 +187,30 @@ class FactureService extends AppService<Article> {
 	}
 
 	Facture changeTarification(Facture facture, int status) {
+		facture.clearNotPersistArticles()
+		facture.clearNotPersistReglements()
 		facture.checkArticles()
 		facture.updateTotaux()
 		return facture
 	}
 
 	@Transactional(readOnly = false, rollbackFor = AppException)
-	Facture saveWithArticles(Facture facture) throws AppException {
+	Facture saveAndCheck(Facture facture) throws AppException {
 		facture.clearNotPersistArticles()
+		facture.clearNotPersistReglements()
+		
 		facture.checkArticles()
+		
 		facture.updateTotaux()
 		facture.updateTvas()
+		facture.updateReglements()
+		
 		return super.save(facture)
 	}
 	
 	@Transactional(readOnly = false, rollbackFor = AppException)
 	Facture valider(Facture facture) throws AppException {
-		saveWithArticles(facture)
+		saveAndCheck(facture)
 		facture.valider()
 		// vrai numéro de facture
 		facture.numero = newNumeroFacture(facture)

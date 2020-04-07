@@ -7,13 +7,13 @@ function onChangeArticleFacture(select, data) {
 }
 
 function onLoadFactureEdit() {
-	$(document).on('click', '#facture-add-article-button', function() {
-		ajaxSubmitForm($(this), '#facture-edit-form', '#facture-ajax-form')
-	})
 	$(document).on('click', 'a.facture-remove-article-button', function() {
 		if (confirm('Voulez-vous supprimer cet article ?')) {
 			ajaxSubmitForm($(this), '#facture-edit-form', '#facture-ajax-form')
 		}
+	})
+	$(document).on('click', 'a.facture-remove-reglement-button', function() {
+		ajaxSubmitForm($(this), '#facture-echeancier-form', '#ajax-content-dialog-echeancier')
 	})
 	$(document).on('change', '.facture-update-tarification', function() {
 		var $this = $(this)
@@ -24,6 +24,12 @@ function onLoadFactureEdit() {
 			focusNextElement($('#' + escapeSelectorName(thisId)))
 		})
 	})
+	
+	configSubmitButton('facture-add-article-button')
+	configSubmitButton('facture-add-echeancier-button')
+	configSubmitButton('facture-repartir-echeancier-button')
+	configDialogButton('facture-echeancier-button')
+	configSaveDialogButton('dialog-echeancier-save-button')
 }
 
 function formatFactureCodeProduitOption(data) {
@@ -76,3 +82,5 @@ function onValiderFacture(element) {
         }
     });
 }
+
+

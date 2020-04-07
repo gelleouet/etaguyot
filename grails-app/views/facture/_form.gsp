@@ -1,6 +1,5 @@
 <g:hiddenField name="numeroBrouillon" value="${ facture?.numeroBrouillon }"/>
 <g:hiddenField name="type" value="${ facture?.type }"/>
-<g:hiddenField name="totalRegle" value="${ app.format2Decimal(number: facture?.totalRegle) }"/>
 
 
 <div class="form-group row required ">
@@ -35,7 +34,7 @@
 					</div>
 					<div class="col text-right">
 						<g:if test="${ facture?.client?.id }">
-							<g:link controller="client" action="edit" id="${ facture.client.id }" target="client" title="Fiche client" class="btn btn-sm btn-secondary">
+							<g:link controller="client" action="edit" id="${ facture.client.id }" target="client" title="Voir la fiche client" class="btn btn-sm btn-secondary">
 								<i class="fa fa-eye"></i>
 							</g:link>
 						</g:if>
@@ -71,12 +70,8 @@
 	</div>
 </div>
 
-<div class="form-group row required">
-	<label class="col-2 col-form-label">Date d'échéance</label>
-	<div class="col-5">
-		<g:field type="date" name="dateEcheance" value="${ app.formatPicker(date: facture?.dateEcheance) }" 
-			class="form-control medium" required="true" disabled="${ facture.isValidee() }"/>
-	</div>
+<div id="ajax-facture-form-echeancier">
+	<g:render template="formEcheancier"/>
 </div>
 
 <div class="form-group row">
@@ -98,7 +93,8 @@
 
 <g:if test="${ !facture.isValidee() }">
 	<div>
-		<a id="facture-add-article-button" class="btn btn-secondary btn" data-url="${ createLink(action: 'addArticle') }">
+		<a id="facture-add-article-button" class="btn btn-secondary" data-url="${ createLink(action: 'addArticle') }"
+			title="Ajouter un article" data-form="facture-edit-form" data-update="facture-ajax-form">
 			<i class="fa fa-plus"></i>&nbsp;Article
 		</a>
 	</div>
@@ -151,6 +147,7 @@
 		</div>
 	</div>
 </div>
+
 
 	
 			

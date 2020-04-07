@@ -27,6 +27,7 @@ var _defaultRanges = {
     'Les 60 derniers jours': [moment().subtract(60, 'days'), moment()],
     'Le mois dernier': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
     'Ce mois-ci': [moment().startOf('month'), moment().endOf('month')],
+    'Les 6 derniers mois': [moment().subtract(6, 'month').startOf('month'), moment().endOf('month')],
     'Exercice N-1': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
     'Exercice': [moment().startOf('year'), moment().endOf('year')],
 }
@@ -247,13 +248,10 @@ function initDateRangePicker() {
 		})
 		
 		$this.on('apply.daterangepicker', function(ev, picker) {
-			console.log('picker change')
 			if ($this.attr('data-startDateId')) {
-				console.log('picker change debut')
 				$('#' + $this.attr('data-startDateId')).val(picker.startDate.format('YYYY-MM-DD'))
 			}
 			if ($this.attr('data-endDateId')) {
-				console.log('picker change fin')
 				$('#' + $this.attr('data-endDateId')).val(picker.endDate.format('YYYY-MM-DD'))
 			}
 		})
@@ -273,19 +271,23 @@ function formatLocaleNumber(element) {
 }
 
 
-var errorAjaxFunction = function(jqXHR, textStatus, errorThrown) {
+function onAjaxError(jqXHR, textStatus, errorThrown, updateId) {
+	var $div = $('#' + updateId)
 	if (jqXHR.responseText) {
-		$('#ajax-error').html(jqXHR.responseText);
+		$div.html(jqXHR.responseText);
 	} else {
-		$('#ajax-error').html(errorThrown);
+		$div.html(errorThrown);
 	}
-	$('#ajax-error').show();
-};
+	$div.show();
+	$div.fadeOut(10000);
+}
 
 
 function ajaxSubmitForm(eltSrcId, formId, divDstId, onSuccess) {
 	var urlAction = $(eltSrcId).attr('data-url');
 	var datas = $(formId).serializeArray();
+	var ajaxDialog = ($(eltSrcId).attr('data-error') == 'dialog')
+	var ajaxErrorUpdate = ajaxDialog ? 'ajax-dialog-error' : 'ajax-error' 
 	
 	jQuery.ajax({
 		type: 'POST',
@@ -299,7 +301,9 @@ function ajaxSubmitForm(eltSrcId, formId, divDstId, onSuccess) {
 				onSuccess();
 			}
 		},
-		error: errorAjaxFunction
+		error: function(jqXHR, textStatus, errorThrown) {
+			onAjaxError(jqXHR, textStatus, errorThrown, ajaxErrorUpdate)
+		}
 	});
 }
 
@@ -333,3 +337,57 @@ function escapeSelectorName(name) {
 	return name.replace(/\./g, '\\.').replace(/\[/g, '\\[').replace(/\]/g, '\\]')
 }
 
+function showDialog(dialogId) {
+	$('#' + dialogId).modal('show')
+}
+
+function hideDialog(dialogId) {
+	var $dialog = $('#' + dialogId)
+	
+	$dialog.modal('hide')
+	
+	if ($dialog.attr('data-dispose') == 'true') {
+		$('#' + dialogId).modal('dispose')
+	}
+}
+
+function configDialogButton(buttonId) {
+	$(document).on('click', '#' + buttonId, function() {
+		var $this = $(this)
+		
+		ajaxSubmitForm($this, '#' + $this.attr('data-form'), '#ajax-dialog', function() {
+			showDialog($this.attr('data-dialog'))
+		})
+	})
+}
+
+function configSaveDialogButton(buttonId) {
+	$(document).on('click', '#' + buttonId, function() {
+		var $this = $(this)
+		
+		ajaxSubmitForm($this, '#' + $this.attr('data-form'), '#' + $this.attr('data-update'), function() {
+			hideDialog($this.attr('data-dialog'))
+		})
+	})
+}
+
+function configSubmitButton(buttonId) {
+	$(document).on('click', '#' + buttonId, function() {
+		var $this = $(this)
+		var confirmMsg = $this.attr("data-confirm")
+		var renderId = ""
+		var continuer = true
+			
+		if ($this.attr('data-update')) {
+			renderId = '#' + $this.attr('data-update')
+		}
+		
+		if (confirmMsg) {
+			continuer = confirm(confirmMsg)
+		}
+		
+		if (continuer) {
+			ajaxSubmitForm($this, '#' + $this.attr('data-form'), renderId)
+		}
+	})
+}

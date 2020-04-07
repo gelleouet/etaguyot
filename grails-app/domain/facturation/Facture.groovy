@@ -28,9 +28,10 @@ class Facture implements Validateable {
 
 	Set<FactureTva> tvas = []
 	Set<FactureArticle> articles = []
+	Set<FactureReglement> reglements = []
 
 
-	static hasMany = [tvas: FactureTva, articles: FactureArticle]
+	static hasMany = [tvas: FactureTva, articles: FactureArticle, reglements: FactureReglement]
 
 	static constraints = {
 		numero unique: true
@@ -46,6 +47,7 @@ class Facture implements Validateable {
 		dateFacture index: 'facture_idx'
 		tvas cascade: 'all-delete-orphan'
 		articles cascade: 'all-delete-orphan'
+		reglements cascade: 'all-delete-orphan'
 	}
 
 
@@ -57,9 +59,21 @@ class Facture implements Validateable {
 		totalTTC() - totalRegle
 	}
 
+	Double totalReparti() {
+		reglements?.sum { it.montantTTC ?: 0 } ?: 0
+	}
+	
+	Double resteARepartir() {
+		totalTTC() - totalReparti()
+	}
 
 	Facture clearNotPersistArticles() {
 		articles?.removeAll { it.status == null }
+		return this
+	}
+
+	Facture clearNotPersistReglements() {
+		reglements?.removeAll { it.status == null }
 		return this
 	}
 
@@ -70,6 +84,89 @@ class Facture implements Validateable {
 			totalRegle= 0d
 		}
 		return this
+	}
+	
+	
+	Facture updateReglements() {
+		// 1. vérifier qu'il y a au moins 1 échéance
+		if (!reglements) {
+			this.addToReglements(dateEcheance: this.dateEcheance,
+				montantTTC: this.totalTTC(), montantRegle: 0d)
+		}
+		
+		// 2. tri des règlements par date échéance pour les futurs traitement
+		List<FactureReglement> reglementSort = reglements.sort { it.dateEcheance }
+		
+		// 3. maj des champs null
+		reglements.each {
+			if (!it.modeReglement) {
+				it.modeReglement = this.modeReglement
+			}
+			if (it.montantRegle == null) {
+				it.montantRegle = 0d
+			}
+			if (it.montantTTC == null) {
+				it.montantTTC = 0d
+			}
+		}
+		
+		// 4. synchro du total réglé facture avec ceux des réglements
+		this.totalRegle = reglements.sum { it.montantRegle } ?: 0d
+		
+		// 5. synchro de la date echeance facture avec la 1ère échéance
+		this.dateEcheance = reglementSort[0].dateEcheance
+		
+		// 6. synhcro des montant reglement avec le montant total
+		// si écart il est complété sur la dernière échéance
+		Double resteARepartir = this.resteARepartir()
+		
+		if (resteARepartir) {
+			reglementSort.last().montantTTC += resteARepartir
+		}
+		
+		return this
+	}
+	
+	
+	FactureReglement addReglement() {
+		// A faire avant l'ajout du nouvel objet sinon le calcul du reste qui se base
+		// sur les reglements va planter avec un montant à null
+		Double reste = this.resteARepartir()
+		
+		FactureReglement reg = new FactureReglement()
+		this.addToReglements(reg)
+		
+		reg.modeReglement = this.modeReglement
+		reg.montantTTC = reste
+		reg.montantRegle = 0d
+		reg.dateEcheance = (reglements.max { it.dateEcheance }?.dateEcheance ?: this.dateEcheance) + 30
+		
+		return reg
+	}
+	
+	Facture removeReglement(Integer status) {
+		reglements.removeAll { it.status == status }
+		return updateReglements()
+	}
+	
+	Facture checkReglement() throws AppException  {
+		if (!reglements) {
+			throw new AppException("Veuillez renseigner au moins une échéance !")
+		}
+		
+		Double reste = resteARepartir()
+		
+		if (reste != 0) {
+			throw new AppException("Le reste à répartir doit être égal à 0 !")
+		}
+		
+		reglements.each { 
+			if (!it.montantTTC) {
+				throw new AppException("Le montant d'une échéance ne peut pas être égal à 0 !")
+			}
+		}
+		
+		return updateReglements()
 	}
 
 

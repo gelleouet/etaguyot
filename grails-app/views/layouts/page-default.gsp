@@ -60,6 +60,8 @@
 						<div id="ajax-error" class="d-none">error</div>
 					
 						<g:layoutBody/>	
+						
+						<div id="ajax-dialog"></div>
 					</div>
 				</div>
 				

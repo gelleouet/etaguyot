@@ -55,7 +55,7 @@ class FactureController extends AppController {
 	@ExceptionHandler
 	def save(Facture facture) {
 		checkErrors(this, facture)
-		factureService.saveWithArticles(facture)
+		factureService.saveAndCheck(facture)
 		redirect(action: 'edit', id: facture.id)
 	}
 	
@@ -105,5 +105,36 @@ class FactureController extends AppController {
 
 	def pdf(Facture facture) {
 		reportService.renderPdf(FactureReport, [facture: facture], response)
+	}
+	
+	def dialogEcheancier(EcheancierCommand command) {
+		Facture facture = command.buildFacture()
+		facture.updateReglements()
+		command.updateDateEcheance(facture)
+		render template: 'dialogEcheancier', model: [facture: facture]
+	}
+	
+	def addReglement(EcheancierCommand command) {
+		Facture facture = command.buildFacture()
+		facture.addReglement()
+		render template: 'contentDialogEcheancier', model: [facture: facture]
+	}
+	
+	def repartirReglement(EcheancierCommand command) {
+		Facture facture = command.buildFacture()
+		facture.updateReglements()
+		render template: 'contentDialogEcheancier', model: [facture: facture]
+	}
+	
+	def removeReglement(EcheancierCommand command) {
+		Facture facture = command.buildFacture()
+		facture.removeReglement(command.status)
+		render template: 'contentDialogEcheancier', model: [facture: facture]
+	}
+	
+	def validerReglement(EcheancierCommand command) {
+		Facture facture = command.buildFacture()
+		facture.checkReglement()
+		render template: 'formEcheancier', model: [facture: facture]
 	}
 }
