@@ -78,10 +78,11 @@ class Facture implements Validateable {
 	}
 
 	Facture updateTotaux() {
-		totalHT = articles.sum { it.totalHT() } ?: 0d
-		totalTVA = articles.sum { it.totalTVA() } ?: 0d
+		// IMPORTANT !! utiliser le setter pour que gorm puisse détecter le changement interne
+		setTotalHT(articles.sum { it.totalHT() } ?: 0d)
+		setTotalTVA(articles.sum { it.totalTVA() } ?: 0d)
 		if (totalRegle == null) {
-			totalRegle= 0d
+			setTotalRegle(0d)
 		}
 		return this
 	}
@@ -111,10 +112,11 @@ class Facture implements Validateable {
 		}
 		
 		// 4. synchro du total réglé facture avec ceux des réglements
-		this.totalRegle = reglements.sum { it.montantRegle } ?: 0d
+		updateTotalRegle()
 		
 		// 5. synchro de la date echeance facture avec la 1ère échéance
-		this.dateEcheance = reglementSort[0].dateEcheance
+		// IMPORTANT !! utiliser le setter pour que gorm puisse détecter le changement interne
+		setDateEcheance(reglementSort[0].dateEcheance)
 		
 		// 6. synhcro des montant reglement avec le montant total
 		// si écart il est complété sur la dernière échéance
@@ -122,6 +124,18 @@ class Facture implements Validateable {
 		
 		if (resteARepartir) {
 			reglementSort.last().montantTTC += resteARepartir
+		}
+		
+		return this
+	}
+	
+
+		Facture updateTotalRegle() {
+		// IMPORTANT !! utiliser le setter pour que gorm puisse détecter le changement interne
+		setTotalRegle(reglements.sum { it.dateReglement ? it.montantRegle : 0d } ?: 0d)
+		
+		if (totalRegle == totalTTC()) {
+			setStatut(StatutFactureEnum.reglee.id) 
 		}
 		
 		return this
@@ -225,15 +239,15 @@ class Facture implements Validateable {
 	}
 	
 	boolean isValidee() {
-		statut == StatutFactureEnum.validee.id
+		statut >= StatutFactureEnum.validee.id
 	}
 	
 	boolean isEnvoyee() {
-		statut == StatutFactureEnum.envoyee.id
+		statut >= StatutFactureEnum.envoyee.id
 	}
 	
 	boolean isReglee() {
-		statut == StatutFactureEnum.reglee.id
+		statut >= StatutFactureEnum.reglee.id
 	}
 	
 	boolean isAnnulee() {

@@ -23,11 +23,11 @@
 	            		<span class="kt-menu__link-text"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<span style="text-decoration:underline">A</span>rticles</span>
 	            	</g:link>
 				</li>
-	            <li class="kt-menu__item ">
+	            <!-- <li class="kt-menu__item ">
 	            	<g:link controller="devis" class="kt-menu__link disabled">
 	            		<span class="kt-menu__link-text"><i class="fa fa-file-invoice fa-lg"></i>&nbsp;&nbsp;<span style="text-decoration:underline">D</span>evis</span>
 	            	</g:link>
-				</li>
+				</li> -->
 				<li class="kt-menu__item ">
 	            	<g:link controller="facture" class="kt-menu__link">
 	            		<span class="kt-menu__link-text"><i class="fa fa-file-invoice-dollar fa-lg"></i>&nbsp;&nbsp;<span style="text-decoration:underline">F</span>actures</span>

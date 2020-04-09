@@ -283,9 +283,9 @@ function onAjaxError(jqXHR, textStatus, errorThrown, updateId) {
 }
 
 
-function ajaxSubmitForm(eltSrcId, formId, divDstId, onSuccess) {
+function ajaxPost(eltSrcId, datas, divDstId, onSuccess) {
 	var urlAction = $(eltSrcId).attr('data-url');
-	var datas = $(formId).serializeArray();
+	var global = !($(eltSrcId).attr('data-immediate') == 'true');
 	var ajaxDialog = ($(eltSrcId).attr('data-error') == 'dialog')
 	var ajaxErrorUpdate = ajaxDialog ? 'ajax-dialog-error' : 'ajax-error' 
 	
@@ -293,6 +293,33 @@ function ajaxSubmitForm(eltSrcId, formId, divDstId, onSuccess) {
 		type: 'POST',
 		data: datas,
 		url: urlAction,
+		global: global,
+		success: function(data, textStatus) {
+			if (divDstId) {
+				$(divDstId).html(data);
+			}
+			if (onSuccess) {
+				onSuccess(data, textStatus);
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			onAjaxError(jqXHR, textStatus, errorThrown, ajaxErrorUpdate)
+		}
+	});
+}
+
+function ajaxSubmitForm(eltSrcId, formId, divDstId, onSuccess) {
+	var urlAction = $(eltSrcId).attr('data-url');
+	var datas = $(formId).serializeArray();
+	var global = !($(eltSrcId).attr('data-immediate') == 'true')
+	var ajaxDialog = ($(eltSrcId).attr('data-error') == 'dialog')
+	var ajaxErrorUpdate = ajaxDialog ? 'ajax-dialog-error' : 'ajax-error' 
+	
+	jQuery.ajax({
+		type: 'POST',
+		data: datas,
+		url: urlAction,
+		global: global,
 		success: function(data, textStatus) {
 			if (divDstId) {
 				$(divDstId).html(data);

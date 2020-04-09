@@ -11,12 +11,12 @@ class ReglementCommand extends AbstractCommand {
 	Date dateDebut
 	Date dateFin
 	Long clientId
-	Boolean regle
+	boolean regle
+	boolean enAttente 
 
 	static constraints = {
 		clientId nullable: true
 		numero nullable: true
-		regle nullable: true
 	}
 
 
@@ -24,9 +24,9 @@ class ReglementCommand extends AbstractCommand {
 		Date now = new Date()
 		use(TimeCategory) {
 			dateDebut = DateUtils.firstDayInYear(now) - 2.years
+			dateFin = DateUtils.lastDayInMonth(now) + 1.month
 		}
-		dateFin = DateUtils.lastDayInMonth(now)
-		regle = false
+		enAttente = true
 	}
 
 	Client client() {

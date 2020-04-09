@@ -9,7 +9,7 @@
 			maxlength="16" readonly="readonly"/>
 	</div>
 	<div class="col-5">
-		<g:render template="singleStatut" model="[facture: facture]"/>
+		<g:render template="multipleStatut" model="[facture: facture]"/>
 	</div>
 </div>
 

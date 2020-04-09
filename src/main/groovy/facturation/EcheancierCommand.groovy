@@ -25,9 +25,11 @@ class EcheancierCommand implements Validateable {
 	
 	
 	Facture updateDateEcheance(Facture facture) {
-		facture.dateEcheance = dateEcheance
-		if (facture.reglements) {
-			facture.reglements[0].dateEcheance = dateEcheance
+		if (dateEcheance) {
+			facture.dateEcheance = dateEcheance
+			if (facture.reglements) {
+				facture.reglements[0].dateEcheance = dateEcheance
+			}
 		}
 		return facture
 	}

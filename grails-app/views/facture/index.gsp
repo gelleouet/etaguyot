@@ -69,14 +69,14 @@
 			    						<td>${ app.format2Decimal(number: facture.totalTTC()) }€</td>
 			    						<td>${ app.format2Decimal(number: facture.resteDu()) }€</td>
 			    						<td>
-			    							<g:if test="${ facture.isValidee() }">
-				    							<g:link action="edit" id="${ facture.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Consulter">
-						                          <i class="la la-info-circle"></i>
+			    							<g:if test="${ facture.isBrouillon() }">
+			    								<g:link action="edit" id="${ facture.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Modifier">
+						                          <i class="la la-edit"></i>
 						                        </g:link>
 					                        </g:if>
 					                        <g:else>
-					                        	<g:link action="edit" id="${ facture.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Modifier">
-						                          <i class="la la-edit"></i>
+					                        	<g:link action="edit" id="${ facture.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Consulter">
+						                          <i class="la la-info-circle"></i>
 						                        </g:link>
 					                        </g:else>
 					                        <g:link action="pdf" id="${ facture.id }" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="PDF">
@@ -102,6 +102,9 @@
 		    					<span class="kt-list__text">&nbsp;Factures</span>
 		    					<span class="kt-list__time">${ synthese.count }</span>
 		    				</div>
+		    				
+		    				<div class="kt-separator kt-separator--border-dashed"></div>
+		    				
 		    				<div class="kt-list__item">
 		    					<span class="kt-list__badge kt-list__badge--brand"></span>
 		    					<span class="kt-list__text">&nbsp;Total HT</span>
