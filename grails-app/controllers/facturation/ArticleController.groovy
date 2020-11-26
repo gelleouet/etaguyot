@@ -39,7 +39,7 @@ class ArticleController extends AppController {
 		def familles = articleService.groupFamille()
 		def unites = articleService.groupUnite()
 		render view: 'edit', model: [article: article, familles: familles,
-			unites: unites]
+			unites: unites, comptes: Compte.list()]
 	}
 
 	@ExceptionHandler

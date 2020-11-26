@@ -41,7 +41,7 @@ class DataTableTagLib {
 		out << "</table>"
 
 		// on insère la pagination après la table
-		if (attrs.noPaginate) {
+		if (!attrs.noPaginate) {
 			out << """<div>"""
 			out << """<ul class="pagination justify-content-end" data-form-id="${ attrs.paginateForm }">"""
 			out << paginate(total: totalCount, prev: "<<", next: ">>")

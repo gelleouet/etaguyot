@@ -68,7 +68,7 @@ class GSPFOReportService extends AbstractReportService {
 		Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, outStream)
 		// identity transformer car le flux d'entrée est déjà converti en langage fo
 		Transformer transformer = TransformerFactory.newInstance().newTransformer()
-		Source source = new StreamSource(new StringReader(foBuffer.toString()))
+		Source source = new StreamSource(new StringReader(foBuffer))
 		Result result = new SAXResult(fop.getDefaultHandler())
 		transformer.transform(source, result)
 	}

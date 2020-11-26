@@ -51,8 +51,16 @@
 	   						<div class="kt-section kt-section--first">
 								<div class="kt-section__body">
 									<h3 class="kt-section__title">Informations générales</h3>
-									
-									<g:render template="form"></g:render>
+									<g:render template="formGeneral"></g:render>
+								</div>
+							</div>
+							
+							<div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
+							
+	   						<div class="kt-section kt-section--first">
+								<div class="kt-section__body">
+									<h3 class="kt-section__title">Informations facturation</h3>
+									<g:render template="formFacturation"></g:render>
 								</div>
 							</div>
 	   					</div>

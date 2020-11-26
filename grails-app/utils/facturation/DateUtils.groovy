@@ -2,6 +2,8 @@ package facturation
 
 import java.text.SimpleDateFormat
 
+import groovy.time.TimeCategory
+
 /**
  * @author gelleouet <gregory.elleouet@gmail.com>
  *
@@ -91,5 +93,25 @@ class DateUtils {
 		calendar.setTime(date)
 		calendar.set(Calendar.DAY_OF_YEAR, 1)
 		return calendar.getTime().clearTime()
+	}
+	
+	
+	/**
+	 * Décale l'année sur la date
+	 *
+	 * @param date
+	 * @param year
+	 * @return
+	 */
+	static Date incDay(Date date, int inc) {
+		Date result
+
+		if (date) {
+			use(TimeCategory) {
+				result = date + inc.days
+			}
+		}
+
+		return result
 	}
 }

@@ -130,11 +130,11 @@ class Facture implements Validateable {
 	}
 	
 
-		Facture updateTotalRegle() {
+	Facture updateTotalRegle() {
 		// IMPORTANT !! utiliser le setter pour que gorm puisse détecter le changement interne
 		setTotalRegle(reglements.sum { it.dateReglement ? it.montantRegle : 0d } ?: 0d)
 		
-		if (totalRegle == totalTTC()) {
+		if (totalRegle && totalRegle == totalTTC()) {
 			setStatut(StatutFactureEnum.reglee.id) 
 		}
 		

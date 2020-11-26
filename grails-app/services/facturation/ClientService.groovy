@@ -31,16 +31,23 @@ class ClientService extends AppService<Client> {
 	}
 
 
-	String newCodeClient() {
+	Client newClient(Client client) {
+		if (!client) {
+			client = new Client()
+		}
+		
 		def row = Client.executeQuery("SELECT max(code) from Client")
-		String newCode = "0001"
+		client.code = "0001"
 
-		if (row && row[0]) {
+		if (row && row[0] && row[0].isInteger()) {
 			def valCode = row[0].toInteger()
-			newCode = String.format("%04d", valCode + 1)
+			client.code = String.format("%04d", valCode + 1)
 		}
 
-		return newCode
+		client.compteCentral = Client.COMPTE_CENTRAL
+		client.compteCompta = Client.PREFIX_COMPTE_COMPTA + client.code
+		
+		return client
 	}
 
 
@@ -52,5 +59,12 @@ class ClientService extends AppService<Client> {
 			}
 			order "famille"
 		}
+	}
+
+
+	@Override
+	Client save(Client client) throws AppException {
+		client.compteCompta = Client.PREFIX_COMPTE_COMPTA + client.code
+		return super.save(client)
 	}
 }

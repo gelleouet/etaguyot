@@ -41,11 +41,12 @@ class ClientController extends AppController {
 	def edit(Client client) {
 		client = getRequestCommand(client ?: new Client())
 		if (!client.code) {
-			client.code = clientService.newCodeClient()
+			client = clientService.newClient(client)
 		}
 		def familles = clientService.groupFamille()
 		render view: 'edit', model: [client: client, modeEnvois: ModeEnvoi.list(),
-			modeReglements: ModeReglement.list(), familles: familles]
+			modeReglements: ModeReglement.list(), familles: familles,
+			echeances : Echeance.list()]
 	}
 
 	@ExceptionHandler

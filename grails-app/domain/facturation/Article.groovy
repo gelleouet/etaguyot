@@ -14,6 +14,7 @@ class Article implements Validateable {
 	Double prixHT = 0d
 	Double tauxTVA = Constantes.TVA
 	String famille
+	String compteCompta
 
 
 	static constraints = {
@@ -23,12 +24,14 @@ class Article implements Validateable {
 		prixHT nullable: true
 		tauxTVA nullable: true
 		famille nullable: true
+		compteCompta nullable: true
 	}
 
 
 	static mapping = {
 		code length: 32
 		unite length: 16
+		compteCompta length: 32
 		commentaire type: 'text'
 	}
 }

@@ -6,6 +6,10 @@ import groovy.transform.AutoClone
 @AutoClone
 class Client implements Validateable {
 
+	static final String PREFIX_COMPTE_COMPTA = "411"
+	static final String COMPTE_CENTRAL = "41110000"
+	
+	
 	String code
 	String raisonSociale
 	String email
@@ -18,7 +22,10 @@ class Client implements Validateable {
 	String telephone
 	ModeReglement modeReglement
 	ModeEnvoi modeEnvoi
-	Integer echeance
+	Echeance echeance
+	String compteCompta
+	String compteCentral
+	Date dateCreated
 
 
 	static constraints = {
@@ -34,6 +41,8 @@ class Client implements Validateable {
 		modeEnvoi nullable: true
 		echeance nullable: true
 		famille nullable: true
+		compteCompta nullable: true
+		compteCentral nullable: true
 	}
 
 
@@ -43,6 +52,8 @@ class Client implements Validateable {
 		ville length:64
 		siret length:32
 		numTVA length:32
+		compteCompta length:32
+		compteCentral length:32
 		telephone length:16
 		email length:64
 		sort 'raisonSociale'

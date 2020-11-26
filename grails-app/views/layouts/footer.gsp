@@ -4,9 +4,7 @@
 			2019&nbsp;&copy;&nbsp;<a href="mailto:gregory.elleouet@gmail.com" class="kt-link">EURL ELLEOUET GREGORY</a>
 		</div>
 		<div class="kt-footer__menu">
-			<a href="http://keenthemes.com/keen" target="_blank" class="kt-link">About</a>
-			<a href="http://keenthemes.com/keen" target="_blank" class="kt-link">Team</a>
-			<a href="http://keenthemes.com/keen" target="_blank" class="kt-link">Contact</a>
+			<a href="" class="kt-link"><g:meta name="info.app.name"/> v<g:meta name="info.app.version"/></a>
 		</div>
 	</div>	
 </div>

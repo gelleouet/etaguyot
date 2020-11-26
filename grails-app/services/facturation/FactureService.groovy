@@ -133,11 +133,30 @@ class FactureService extends AppService<Article> {
 				facture.modeReglement = facture.client.modeReglement
 			}
 			if (facture.client.echeance) {
-				facture.dateEcheance = facture.dateFacture + facture.client.echeance
+				facture.dateEcheance = calculEcheance(facture.dateFacture, facture.client.echeance)
 			}
 		}
 
 		return facture
+	}
+	
+	
+	Date calculEcheance(Date date, Echeance echeance) {
+		if (!date || !echeance) {
+			return date
+		}
+		
+		if (echeance.libelle == "30JFM") {
+			return DateUtils.lastDayInMonth(DateUtils.incDay(date, 30))
+		} else if (echeance.libelle == "30JN") {
+			return DateUtils.incDay(date, 30)
+		} else if (echeance.libelle == "60JFM") {
+			return DateUtils.lastDayInMonth(DateUtils.incDay(date, 60))
+		} else if (echeance.libelle == "60JN") {
+			return DateUtils.incDay(date, 60)
+		} else {
+			return date
+		}
 	}
 
 

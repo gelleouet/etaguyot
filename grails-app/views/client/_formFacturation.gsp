@@ -15,8 +15,8 @@
 <div class="form-group row">
 	<label class="col-3 col-form-label">Echéance</label>
 	<div class="col-3">
-		<g:field type="number" name="echeance" value="${ client?.echeance }" class="form-control" min="1"/>
-		<small class="form-text text-muted">En nombre de jours</small>
+		<g:select name="echeance.id" value="${ client?.echeance?.id }" from="${ echeances }" class="form-control"
+			optionKey="id" optionValue="libelle" noSelection="[null: ' ']"/>
 	</div>
 </div>
 
@@ -33,6 +33,20 @@
 	<div class="col-6">
 		<g:select name="modeEnvoi.id" value="${ client?.modeEnvoi?.id }" from="${ modeEnvois }" class="form-control"
 			optionKey="id" optionValue="libelle" noSelection="[null: ' ']"/>
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-3 col-form-label">Compte compta</label>
+	<div class="col-6">
+		<g:textField name="compteCompta" value="${ client?.compteCompta }" class="form-control" placeholder="Compte compta" maxlength="32"/>
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-3 col-form-label">Compte central</label>
+	<div class="col-6">
+		<g:textField name="compteCentral" value="${ client?.compteCentral }" class="form-control" placeholder="Compte central" maxlength="32"/>
 	</div>
 </div>
 

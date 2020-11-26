@@ -66,13 +66,13 @@ abstract class AppController {
 	 */
 	Map pagination() {
 		def offset
-		def max = params?.max ?: grailsApplication.config.app.pagination.max
+		def max = paginationMax() ?: paginationDefaultMax()
 
 		// pagination en général des appels ajax
 		if (params.page != null && params.page.isInteger()) {
 			offset = params.'int'('page') > 0 ? params.'int'('page') - 1 : 0
 		} else {
-			offset = params?.offset ?: 0
+			offset = paginationOffset() ?: 0
 		}
 
 		//reinject les valeur dans la request
@@ -80,6 +80,21 @@ abstract class AppController {
 		params.offset = offset
 
 		[offset: offset, max: max]
+	}
+	
+	
+	int paginationDefaultMax() {
+		grailsApplication.config.app.pagination.max
+	}
+	
+	
+	Integer paginationMax() {
+		params?.max ? params.'int'('max') : null
+	}
+	
+	
+	Integer paginationOffset() {
+		params?.offset ? params.'int'('offset') : null
 	}
 
 
@@ -244,9 +259,11 @@ abstract class AppController {
 		
 		// on gère la pagination pour les moteurs de recherche
 		if (value instanceof AbstractCommand) {
-			Map pagination = pagination()
-			value.offset = pagination.offset
-			value.max = pagination.max
+			value.bindPagination(paginationOffset(), paginationMax(), paginationDefaultMax())
+			
+			// réinject la pagination dans la request
+			params.max = value.max
+			params.offset = value.offset
 		}
 
 		return setSessionAttribute(VIEW_SEARCH_ATTRIBUTE, value)
