@@ -100,7 +100,7 @@ class DateUtils {
 	 * Décale l'année sur la date
 	 *
 	 * @param date
-	 * @param year
+	 * @param inc
 	 * @return
 	 */
 	static Date incDay(Date date, int inc) {
@@ -109,6 +109,26 @@ class DateUtils {
 		if (date) {
 			use(TimeCategory) {
 				result = date + inc.days
+			}
+		}
+
+		return result
+	}
+	
+	
+	/**
+	 * Décale l'année sur la date
+	 *
+	 * @param date
+	 * @param inc
+	 * @return
+	 */
+	static Date incYear(Date date, int inc) {
+		Date result
+
+		if (date) {
+			use(TimeCategory) {
+				result = date + inc.years
 			}
 		}
 

@@ -8,6 +8,7 @@
 //= require plugins.bundle
 //= require scripts.bundle
 //= require datatables.bundle
+//= require chart
 //= require app
 //= require_tree view
 //= require_self
@@ -81,6 +82,7 @@ function initGlobal() {
 	initComboBox()
 	initDateRangePicker()
 	initLocaleTypeNumber()
+	initChartJS()
 }
 
 
