@@ -255,4 +255,65 @@ class FactureService extends AppService<Article> {
 		
 		return avoir
 	}
+	
+	
+	/**
+	 * Calcul stat CA sur une année complète
+	 * Raccourci FactureService#statCAByMonth
+	 * 
+	 * @param date
+	 * @return
+	 */
+	Map statCAByMonthForYear(Date date) {
+		statCAByMonth(DateUtils.firstDayInYear(date), DateUtils.lastDayInYear(date), date)
+	}
+	
+	
+	/**
+	 * Calcul le CA par mois entre 2 dates. 
+	 * Pré-calcul des totaux sur période, et raccourci vers le total du mois en cours
+	 * Comme c'est regroupé par le n° du mois, il ne faut pas que la plage
+	 * de date couvre plus d'une année
+	 * Le Ca est converti en milliers d'euros
+	 * 
+	 * @param dateDebut
+	 * @param dateFin
+	 * @param currentDate
+	 * @return
+	 */
+	Map statCAByMonth(Date dateDebut, Date dateFin, Date currentDate) {
+		log.info "Stat CA entre ${dateDebut.format('dd/MM/yyyy')} et ${dateFin.format('dd/MM/yyyy')}, current: ${currentDate.format('dd/MM/yyyy')}"
+		
+		Map stat = [dateDebut: dateDebut, dateFin: dateFin, values: []]
+		
+		List values = Facture.executeQuery("""\
+			SELECT new map(month(f.dateFacture) as month, (sum(f.totalHT) / 1000) as totalht)
+			FROM Facture f
+			WHERE f.dateFacture between :dateDebut and :dateFin
+			AND f.statut >= :statut
+			GROUP BY month(f.dateFacture)
+			ORDER BY month(f.dateFacture)
+		""", [dateDebut: dateDebut, dateFin: dateFin, statut: StatutFactureEnum.validee.id])
+		
+		double cumulHT = 0
+		
+		// retravaille les valeurs pour avoir une liste complète de 12 éléments (plus
+		// pratique pour les charts et plus facile pour comparer 2 années)
+		// !! ATTENTION : les mois issus du HQL sont indexés de 1 à 12, alors qu'en Java c'est de 0 à 11
+		for (int month = 1; month <= 12; month++) {
+			Map val = values.find { it.month == month } ?: [month: month, totalht: 0]
+			
+			// arrondi du total
+			val.totalht = (val.totalht as Double).round(1)
+			
+			cumulHT += val.totalht
+			val.cumulht = (cumulHT as Double).round(1)
+			stat.values << val
+		}
+		
+		stat.currentHT = stat.values[currentDate[Calendar.MONTH]].totalht 
+		stat.totalHT = cumulHT
+
+		return stat
+	}
 }

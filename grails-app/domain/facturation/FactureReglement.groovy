@@ -31,5 +31,6 @@ class FactureReglement implements Validateable {
 	
 	static mapping = {
 		facture index: 'facture_reglement_idx'
+		dateEcheance index: 'facture_reglement_echeance_idx'
 	}
 }

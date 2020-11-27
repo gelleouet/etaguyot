@@ -5,7 +5,7 @@ import grails.plugin.springsecurity.annotation.Secured
 
 class DashboardController extends AppController {
 
-	StatService statService
+	FactureService factureService
 	
 	
 	private static Map controllerPrefix = [
@@ -14,11 +14,12 @@ class DashboardController extends AppController {
 		"f": "facture",
 	]
 
+	
 	def index() {
 		Date currentDate = new Date().clearTime()
-		Map statFactureAnnuel = statService.statFactureAnnuel(currentDate)
-		Map statFactureMensuel = statService.statFactureMensuel(currentDate)
-		[statFactureAnnuel: statFactureAnnuel, statFactureMensuel: statFactureMensuel]
+		Map statFactureAnneeN = factureService.statCAByMonthForYear(currentDate)
+		Map statFactureAnneeN_1 = factureService.statCAByMonthForYear(DateUtils.incYear(currentDate, -1))
+		[statFactureAnneeN: statFactureAnneeN, statFactureAnneeN_1: statFactureAnneeN_1]
 	}
 
 

@@ -1,4 +1,4 @@
-<div class="kt-portlet ${ pageProperty(name: 'fluid') ? 'kt-portlet--height-fluid' : 'kt-portlet-mobile' }">
+<div class="kt-portlet ${ pageProperty(name: 'fluid') ? 'kt-portlet--height-fluid' : '' }">
 	<div class="kt-portlet__head">
 		<div class="kt-portlet__head-label">
 			<h3 class="kt-portlet__head-title"><g:pageProperty name="page.portletTitle"/></h3>
